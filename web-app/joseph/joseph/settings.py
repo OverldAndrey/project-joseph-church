@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'joseph.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "joseph_db",
+        'NAME': "joseph_db_test",
         'USER': 'postgres',
         'PASSWORD': 'word-of-Joseph9999',
         'HOST': '127.0.0.1',
@@ -105,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = "joseph_app.User"
 
 
 # Internationalization
