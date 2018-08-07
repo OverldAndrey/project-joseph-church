@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+import datetime
+
 class NewUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -27,6 +29,7 @@ class User(AbstractUser):
         max_length=255,
         unique=True,
     )
+    username = datetime.datetime.now()
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     second_name = models.CharField(max_length=255)
