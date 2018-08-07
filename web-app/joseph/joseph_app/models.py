@@ -31,7 +31,7 @@ class User(AbstractUser):
     surname = models.CharField(max_length=255)
     second_name = models.CharField(max_length=255)
     avatar = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(default="1970-01-01")
     phone = models.CharField(max_length=18)
     pubnet = models.CharField(max_length=255)
     university = models.CharField(max_length=255)
@@ -42,11 +42,12 @@ class User(AbstractUser):
     hobby = models.CharField(max_length=1023)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     objects = NewUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = [""]
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
@@ -54,6 +55,7 @@ class User(AbstractUser):
     def has_perm(self, perm, obj=None):
         return True
 
+    @property
     def is_staff(self):
         return self.is_admin
 

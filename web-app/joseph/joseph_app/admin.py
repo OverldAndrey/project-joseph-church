@@ -45,7 +45,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ("name", "surname", "second_name", "avatar", "date_of_birth", "phone","pubnet", "university",
+    list_display = ("email", "name", "surname", "second_name", "avatar", "date_of_birth", "phone", "pubnet", "university",
                     "course", "reg_address", "cur_address", "organizations", "hobby", "is_admin",)
     list_filter = ("is_admin",)
     fieldsets = (
@@ -67,5 +67,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+
+admin.site.unregister(Group)
 
 # Register your models here.
