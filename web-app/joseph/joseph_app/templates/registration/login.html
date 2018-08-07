@@ -1,0 +1,6 @@
+<form action="{% url 'joseph_app:login_user' %}" method="post">
+    {% csrf_token %}
+    <input type="email" name="email" required="required" id="email" />
+    <input type="password" name="password" required="required" id="password" />
+    <button type="submit">Enter</button>
+</form>
