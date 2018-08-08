@@ -1,0 +1,87 @@
+BODY {
+    cursor: default;
+}
+
+a:hover {
+    color: rgb(255, 207, 0);
+}
+
+.nav-ustyle {
+    color: white;
+    padding: 12px;
+    width: 150px;
+    height: 50px;
+}
+.nav-ustyle:hover p {
+    color: rgb(5, 3, 113);
+}
+.nav-profile {
+    margin-right: 8px;
+    color: white;
+    font-size: 0.7em;
+}
+.nav-profile-img {
+    border-radius: 50% 50%;
+    height: 34px;
+}
+.profile-dropdown {
+    min-width: inherit;
+    text-align: right;
+    font-size: 0.7em;
+    left: auto;
+    right: 5px;;
+}
+.navBarrier {
+    position: absolute;
+    top: 5px;
+    left: 22px;
+    height: 120px;
+    width: 8px;
+    background-color: rgb(5, 3, 113);
+}
+.footer {
+    margin-top: 50px;
+    bottom: 0;
+    width: 100%;
+    background: rgb(5, 3, 113);
+    color: white;
+}
+.footer-h4 {
+    font-size: 0.6em;
+}
+.footer-h5 * {
+    font-size: 0.7em;
+    margin: 0;
+}
+
+#nav1:hover {
+    background-color: rgba(255, 207, 0, 0.75);
+    color: rgb(5, 3, 113);
+}
+#nav2:hover {
+    background-color: rgba(240, 0, 240, 0.75);
+    color: rgb(5, 3, 113);
+}
+#nav3:hover {
+    background-color: rgba(82, 245, 255, 0.75);
+    color: rgb(5, 3, 113);
+}
+#navAdd1, #navAdd2, #navAdd3 {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    color: rgb(5, 3, 113);
+    display: none;
+}
+#navAdd1 {
+    background-color: rgb(255, 207, 0);
+}
+#navAdd2 {
+    background-color: rgb(240, 0, 240);
+}
+#navAdd3 {
+    background-color: rgb(82, 245, 255);
+}
+#nav1:hover #navAdd1, #nav2:hover #navAdd2, #nav3:hover #navAdd3 {
+    display: block;
+}
