@@ -22,8 +22,8 @@
     <input type="number" name="course" id="course" required="required" value="{{ user.course }}" />course<br>
     <input type="text" name="reg_address" id="reg_address" value="{{ user.reg_address }}" />reg_address<br>
     <input type="text" name="cur_address" id="cur_address" value="{{ user.cur_address }}" />cur_address<br>
-    <textarea name="organizations" id="organizations" value="{{ user.organizations }}" >organizations</textarea><br>
-    <textarea name="hobby" id="hobby" value="{{ user.hobby }}">hobby</textarea><br>
+    <textarea name="organizations" id="organizations" value="{{ user.organizations }}" ></textarea>organizations<br>
+    <textarea name="hobby" id="hobby" value="{{ user.hobby }}"></textarea>hobby<br>
     {% if not user %}
     <button type="submit">Register</button>
     {% else %}

@@ -19,7 +19,10 @@ def login_user(request):
         return HttpResponse("Login failed")
 
 def create_user(request):
-    return render(request, "registration/update_user.html")
+    response = {
+        "user" : None
+    }
+    return render(request, "registration/update_user.html", response)
 
 def register_user(request):
     user = User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
