@@ -14,7 +14,7 @@
     <input type="text" name="name" id="name" required="required" value="{{ user.name }}" />name<br>
     <input type="text" name="surname" id="surname" required="required" value="{{ user.surname }}" />surname<br>
     <input type="text" name="second_name" id="second_name" value="{{ user.second_name }}" />second_name<br>
-    <input type="image" name="avatar" id="avatar" value="{{ user.avatar }}" />avatar<br>
+    <input type="file" name="avatar" id="avatar" value="{{ user.avatar }}" />avatar<br>
     <input type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth }}" />date_of_birth (DD.MM.YYYY)<br>
     <input type="tel" name="phone" id="phone" required="required" value="{{ user.phone }}" />phone<br>
     <input type="url" name="pubnet" id="pubnet" value="{{ user.pubnet }}" />pubnet<br>
@@ -22,8 +22,8 @@
     <input type="number" name="course" id="course" required="required" value="{{ user.course }}" />course<br>
     <input type="text" name="reg_address" id="reg_address" value="{{ user.reg_address }}" />reg_address<br>
     <input type="text" name="cur_address" id="cur_address" value="{{ user.cur_address }}" />cur_address<br>
-    <input type="text" name="organizations" id="organizations" value="{{ user.organizations }}" />organizations<br>
-    <input type="text" name="hobby" id="hobby" value="{{ user.hobby }}" />hobby<br>
+    <textarea name="organizations" id="organizations" value="{{ user.organizations }}" >organizations</textarea><br>
+    <textarea name="hobby" id="hobby" value="{{ user.hobby }}">hobby</textarea><br>
     {% if not user %}
     <button type="submit">Register</button>
     {% else %}

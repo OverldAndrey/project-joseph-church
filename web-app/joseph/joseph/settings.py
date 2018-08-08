@@ -108,6 +108,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = "joseph_app.User"
 
+MEDIA_ROOT = os.getcwd()+"_app/static/joseph_app/"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
