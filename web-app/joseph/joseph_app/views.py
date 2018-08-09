@@ -3,11 +3,12 @@ from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.urls import reverse
 
-from .models import User
+from .models import User, Poll_choice, Poll, User_poll_choice
 
 def index(request):
     return HttpResponse("Hale Joseph")
 
+#Логин пользователя, редирект на user_cab
 def login_user(request):
     email = request.POST["email"]
     password = request.POST["password"]
@@ -18,12 +19,14 @@ def login_user(request):
     else:
         return HttpResponse("Login failed")
 
+#Создание нового пользователя, рендер страницы регистрации update_user.html
 def create_user(request):
     response = {
         "user" : None
     }
     return render(request, "registration/update_user.html", response)
 
+#Регистрация нового пользователя в базе данных, редирект на login_user
 def register_user(request):
     user = User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
     user.name = request.POST['name']
@@ -42,6 +45,7 @@ def register_user(request):
     user.save()
     return HttpResponsePermanentRedirect(reverse("joseph_app:login_user"))
 
+#Изменение информации о пользователе, рендер update_user.html
 def redact_user(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
@@ -50,6 +54,7 @@ def redact_user(request, user_pk):
         }
         return render(request, "registration/update_user.html", response)
 
+#Изменение информации о пользователе в базе данных, редирект на user_cab
 def update_user(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
@@ -70,15 +75,43 @@ def update_user(request, user_pk):
         user.save()
         return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
 
+#Рендер страницы личного кабинета cabinet.html
 def user_cab(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
+        poll_list = []
+        for poll in user.user_poll_choice_set.all():
+            poll_list.append(Poll.objects.get(pk=poll.poll))
+        choice_list = []
+        for choice in user.user_poll_choice_set.all():
+            choice_list.append(Poll_choice.objects.get(pk=choice.choice))
         response = {
             "user" : user,
+            "poll_list" : poll_list,
+            "choice_list" : choice_list,
         }
         return render(request, "joseph_app/cabinet.html", response)
     else:
         return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
+
+def polls(request):
+    user = request.user
+    response = {
+        "polls_list" : Poll.objects.all(),
+        "user" : user
+    }
+    return render(request, "joseph_app/polls.html", response)
+
+def poll_choice_reg(request, user_pk, poll_pk):
+    user = request.user
+    poll = Poll.objects.get(pk=poll_pk)
+    choice = Poll_choice.objects.get(pk=request.POST['choice'])
+    choice.votes += 1
+    choice.save()
+    user_choice = User_poll_choice(user=user, poll=poll.pk, choice=choice.pk)
+    user_choice.save()
+    return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
+
 
 
 # Create your views here.

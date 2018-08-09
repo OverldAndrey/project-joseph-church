@@ -19,6 +19,7 @@ class NewUserManager(BaseUserManager):
     def create_superuser(self, email, password=None):
         user = self.create_user(email, password=password)
         user.is_admin=True
+        user.is_superuser=True
         user.save(using=self._db)
         return user
 
@@ -70,6 +71,7 @@ class Poll(models.Model):
     text = models.CharField(max_length=16383)
     pub_date = models.DateTimeField(default=datetime.datetime.now())
     poll_image = models.CharField(max_length=127, default=" ")
+    poll_type = models.PositiveSmallIntegerField(default=1)
 
     def __str__(self):
         return self.text
@@ -87,6 +89,8 @@ class User_poll_choice(models.Model):
     poll = models.IntegerField(default=0)
     choice = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.user.email+" "+str(self.poll)+" "+str(self.choice)
 
 
 

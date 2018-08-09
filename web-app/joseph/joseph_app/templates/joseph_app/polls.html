@@ -1,0 +1,22 @@
+{% if polls_list %}
+    {% for poll in polls_list %}
+        
+        <p>{{ poll.text }}</p><br>
+        <form action="{% url 'joseph_app:poll_choice_reg' user.pk poll.pk %}" method="post">
+            {% csrf_token %}
+            <ul>
+            {% for choice in poll.poll_choice_set.all %}
+                {% if poll.poll_type == 1 %}
+                    <li><input type="radio" name="choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />{{choice.text}}</li>
+                {% endif %}
+                {% if poll.poll_type == 2 %}
+                    <li><input type="checkbox" name="poll{{poll.pk}}choice" id="choice{{choice.pk}}" />{{choice.text}}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+            <button type="submit">Vote</button>
+        </form>
+    {% endfor %}
+{% else %}
+    No polls yet
+{% endif %}

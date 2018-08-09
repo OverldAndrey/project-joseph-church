@@ -1,3 +1,11 @@
 Hello, {{ user.name }}
 
+My polls:
+{% for poll in poll_list %}
+    <h5>{{poll.text}}</h5>
+{% endfor %}
+{% for choice in choice_list %}
+    <p>{{choice.text}}</p>
+{% endfor %}
+
 <a href="{% url 'joseph_app:redact_user' user.pk %}">Redact</a>
