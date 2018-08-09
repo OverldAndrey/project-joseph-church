@@ -93,7 +93,18 @@ class User_poll_choice(models.Model):
     def __str__(self):
         return self.user.email+" "+str(self.poll)+" "+str(self.choice)
 
+class Article(models.Model):
+    title = models.CharField(max_length = 120)
+    body = models.TextField()
+    date = models.DateTimeField()
 
+
+    def __str__(self):
+        return self.title
+
+class Article_Image(models.Model):
+    article = models.ForeignKey(Article, on_delete = models.CASCADE)
+    image = models.CharField(max_length = 127)
 
 
 
