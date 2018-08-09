@@ -5,7 +5,14 @@ My polls:
     <h5>{{poll.text}}</h5>
 {% endfor %}
 {% for choice in choice_list %}
-    <p>{{choice.text}}</p>
+    {% if choice.text %}
+        <p>{{choice.text}}</p>
+    {% else %}
+        {% for mult in choice %}
+            <p>{{mult.text}}</p>
+        {% endfor %}
+    {% endif %}
 {% endfor %}
 
 <a href="{% url 'joseph_app:redact_user' user.pk %}">Redact</a>
+<a href="{% url 'joseph_app:polls' %}">Polls</a>

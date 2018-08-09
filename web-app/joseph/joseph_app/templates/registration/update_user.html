@@ -15,7 +15,7 @@
     <input type="text" name="surname" id="surname" required="required" value="{{ user.surname }}" />surname<br>
     <input type="text" name="second_name" id="second_name" value="{{ user.second_name }}" />second_name<br>
     <input type="file" name="avatar" id="avatar" value="{{ user.avatar }}" />avatar<br>
-    <input type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth }}" />date_of_birth (DD.MM.YYYY)<br>
+    <input type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth|date:'d-m-Y' }}" />date_of_birth (DD.MM.YYYY)<br>
     <input type="tel" name="phone" id="phone" required="required" value="{{ user.phone }}" />phone<br>
     <input type="url" name="pubnet" id="pubnet" value="{{ user.pubnet }}" />pubnet<br>
     <input type="text" name="university" id="university" required="required" value="{{ user.university }}" />university<br>

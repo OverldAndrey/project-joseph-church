@@ -7,10 +7,10 @@
             <ul>
             {% for choice in poll.poll_choice_set.all %}
                 {% if poll.poll_type == 1 %}
-                    <li><input type="radio" name="choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />{{choice.text}}</li>
+                    <li><input type="radio" name="{{poll.pk}}choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />{{choice.text}}</li>
                 {% endif %}
                 {% if poll.poll_type == 2 %}
-                    <li><input type="checkbox" name="poll{{poll.pk}}choice" id="choice{{choice.pk}}" />{{choice.text}}</li>
+                    <li><input type="checkbox" name="{{poll.pk}}choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />{{choice.text}}</li>
                 {% endif %}
             {% endfor %}
             </ul>
@@ -19,4 +19,9 @@
     {% endfor %}
 {% else %}
     No polls yet
+{% endif %}
+{% if user %}
+<a href="{% url 'joseph_app:user_cab' user.pk %}">Profile</a>
+{% else %}
+<a href="{% url 'joseph_app:login' %}">Login</a>
 {% endif %}

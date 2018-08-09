@@ -84,7 +84,14 @@ def user_cab(request, user_pk):
             poll_list.append(Poll.objects.get(pk=poll.poll))
         choice_list = []
         for choice in user.user_poll_choice_set.all():
-            choice_list.append(Poll_choice.objects.get(pk=choice.choice))
+            if choice.choice:
+                choice_list.append(Poll_choice.objects.get(pk=choice.choice))
+            else:
+                multiple_choices = []
+                for choice_pk in choice.choice_mult.split("_"):
+                    multiple_choices.append(Poll_choice.objects.get(pk=choice_pk))
+                choice_list.append(multiple_choices)
+
         response = {
             "user" : user,
             "poll_list" : poll_list,
@@ -105,11 +112,21 @@ def polls(request):
 def poll_choice_reg(request, user_pk, poll_pk):
     user = request.user
     poll = Poll.objects.get(pk=poll_pk)
-    choice = Poll_choice.objects.get(pk=request.POST['choice'])
-    choice.votes += 1
-    choice.save()
-    user_choice = User_poll_choice(user=user, poll=poll.pk, choice=choice.pk)
-    user_choice.save()
+    if poll.poll_type == 1:
+        choice = Poll_choice.objects.get(pk=request.POST[str(poll_pk)+'choice'])
+        choice.votes += 1
+        choice.save()
+        user_choice = User_poll_choice(user=user, poll=poll.pk, choice=choice.pk)
+        user_choice.save()
+    elif poll.poll_type == 2:
+        choice_list = request.POST.getlist(str(poll_pk)+'choice')
+        for choice_pk in choice_list:
+            choice = Poll_choice.objects.get(pk=choice_pk)
+            choice.votes += 1
+            choice.save()
+        user_choice = User_poll_choice(user=user, poll=poll.pk, choice_mult="_".join(choice_list))
+        user_choice.save()
+
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
 

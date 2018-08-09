@@ -88,9 +88,11 @@ class User_poll_choice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     poll = models.IntegerField(default=0)
     choice = models.IntegerField(default=0)
+    choice_mult = models.CharField(max_length=255, default="")
 
     def __str__(self):
         return self.user.email+" "+str(self.poll)+" "+str(self.choice)
+
 
 
 
