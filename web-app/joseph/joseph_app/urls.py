@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('polls/', views.polls, name="polls"),
     path('polls/choice_reg_<int:user_pk>_<int:poll_pk>/', views.poll_choice_reg, name="poll_choice_reg"),
-    path('news/',ListView.as_view(queryset=Article.objects.all().order_by('-date')[:20], template_name='joseph_app/many_articles.html')),
-    path('news/<pk>',DetailView.as_view(model = Article, template_name = 'joseph_app/article.html')),
+
+    path('news/',ListView.as_view(queryset=Article.objects.all().order_by('-date')[:20], template_name='joseph_app/many_articles.html'), name="news"),
+    path('news/<int:pk>',DetailView.as_view(model = Article, template_name = 'joseph_app/article.html'), name="news_article"),
 ]
