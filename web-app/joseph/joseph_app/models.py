@@ -37,7 +37,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     second_name = models.CharField(max_length=255)
-    avatar = models.CharField(max_length=127)
+    avatar = models.CharField(max_length=511)
     date_of_birth = models.DateField(default="1970-01-01")
     phone = models.CharField(max_length=18)
     pubnet = models.CharField(max_length=255)
@@ -70,7 +70,7 @@ class User(AbstractUser):
 class Poll(models.Model):
     text = models.CharField(max_length=16383)
     pub_date = models.DateTimeField(default=datetime.datetime.now())
-    poll_image = models.CharField(max_length=127, default=" ")
+    poll_image = models.CharField(max_length=511, default=" ")
     poll_type = models.PositiveSmallIntegerField(default=1)
 
     def __str__(self):
@@ -103,14 +103,14 @@ class Article(models.Model):
 
 class Article_Image(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
-    image = models.CharField(max_length = 127)
+    image = models.CharField(max_length = 511)
 
 class Event(models.Model):
     title = models.CharField(max_length=127)
     text = models.TextField()
     pub_date = models.DateTimeField()
     event_date = models.DateTimeField()
-    image = models.CharField(max_length=127, default=" ")
+    image = models.CharField(max_length=511, default=" ")
     place = models.CharField(max_length=127)
 
     def __str__(self):

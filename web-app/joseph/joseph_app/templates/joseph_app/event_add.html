@@ -1,4 +1,4 @@
-<form action="{% url 'joseph_app:event_create' %}" method="post">
+<form action="{% url 'joseph_app:event_create' %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <input type="text" name="title" id="title" />
     <textarea name="text" id="text"></textarea>Text<br>

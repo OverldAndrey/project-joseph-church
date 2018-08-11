@@ -1,7 +1,12 @@
+{% load static %}
+
 {% if polls_list %}
     {% for poll in polls_list %}
         
-        <p>{{ poll.text }}</p><br>
+        <p>{{ poll.text }}</p>
+        {% if poll.poll_image != ' ' %}
+            <img src="{% static poll.poll_image %}"><br>
+        {% endif %}
         <form action="{% url 'joseph_app:poll_choice_reg' user.pk poll.pk %}" method="post">
             {% csrf_token %}
             <ul>

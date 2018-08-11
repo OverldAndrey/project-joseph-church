@@ -1,10 +1,20 @@
+{% load static %}
+
 {% for event in events_list %}
     <h5>{{ event.title }}</h5>
+    {% if event.image != ' ' %}
+        <img src="{% static event.image %}">
+    {% endif %}
     <p>{{ event.text }}</p>
     <p>{{ event.event_date }}</p>
     <p>{{ event.place }}</p>
     {% if user %}
-    <a href="{% url 'joseph_app:event_register' event.pk %}">Register</a>
+        {% if user.is_admin %}
+        <a href="{% url 'joseph_app:make_docx' event.pk %}">Docx</a>
+        <a href="{% url 'joseph_app:make_xlsx' event.pk %}">Xlsx</a>
+        {% else %}
+        <a href="{% url 'joseph_app:event_register' event.pk %}">Register</a>
+        {% endif %}
     {% endif %}
 {% endfor %}
 {% if user %}

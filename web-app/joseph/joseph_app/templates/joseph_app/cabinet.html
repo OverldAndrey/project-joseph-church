@@ -1,4 +1,7 @@
-Hello, {{ user.name }}
+{% load static %}
+
+Hello, {{ user.name }}<br>
+<img src="{% static user.avatar %}">
 
 My events:
 {% for event in event_list %}
@@ -28,3 +31,9 @@ My polls:
 <a href="{% url 'joseph_app:polls' %}">Polls</a>
 <a href="{% url 'joseph_app:events' %}">Events</a>
 <a href="{% url 'joseph_app:news' %}">News</a>
+{% if user.is_admin %}
+<a href="{% url 'joseph_app:poll_create_page' %}">Create poll</a>
+<a href="{% url 'joseph_app:event_create_page' %}">Create event</a>
+<a href="{% url 'joseph_app:article_create_page' %}">Create article</a>
+{% endif %}
+<a href="{% url 'joseph_app:logout_user' %}">Exit</a>
