@@ -1,0 +1,14 @@
+{% for event in events_list %}
+    <h5>{{ event.title }}</h5>
+    <p>{{ event.text }}</p>
+    <p>{{ event.event_date }}</p>
+    <p>{{ event.place }}</p>
+    {% if user %}
+    <a href="{% url 'joseph_app:event_register' event.pk %}">Register</a>
+    {% endif %}
+{% endfor %}
+{% if user %}
+<a href="{% url 'joseph_app:user_cab' user.pk %}">Profile</a>
+{% else %}
+<a href="{% url 'joseph_app:login' %}">Login</a>
+{% endif %}

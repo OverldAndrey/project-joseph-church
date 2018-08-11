@@ -1,0 +1,10 @@
+<form action="{% url 'joseph_app:poll_create' %}" method="post">
+    {% csrf_token %}
+    <textarea name="text" id="text"></textarea>Text<br>
+    <input type="radio" name="poll_type" id="poll_type_1" value="1" />Radio<br>
+    <input type="radio" name="poll_type" id="poll_type_2" value="2" />Checkbox<br>
+    <input type="text" name="poll1" id="poll1" />
+    <input type="text" name="poll2" id="poll2" />
+    <input type="file" name="poll_image" id="poll_image" />
+    <button type="submit">Create poll</button>
+</form>

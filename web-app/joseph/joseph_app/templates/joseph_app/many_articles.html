@@ -5,5 +5,6 @@
  <a href = '{{post.id}}'><h3>{{post.title}}</h3></a>
  <h5>{{post.date|date:'d-m-Y'}}</h5>
 {% endfor %}
+<a href="{% url 'joseph_app:user_cab' user.pk %}">Profile</a>
 
 {% endblock %}

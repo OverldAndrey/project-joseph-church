@@ -1,0 +1,9 @@
+<form action="{% url 'joseph_app:event_create' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="title" id="title" />
+    <textarea name="text" id="text"></textarea>Text<br>
+    <input type="text" name="event_date" id="event_date" value="2018-08-16 19:00"/>
+    <input type="text" name="place" id="place" />
+    <input type="file" name="event_image" id="event_image" />
+    <button type="submit">Create event</button>
+</form>

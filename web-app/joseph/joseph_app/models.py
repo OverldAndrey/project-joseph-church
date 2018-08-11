@@ -98,13 +98,35 @@ class Article(models.Model):
     body = models.TextField()
     date = models.DateTimeField()
 
-
     def __str__(self):
         return self.title
 
 class Article_Image(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
     image = models.CharField(max_length = 127)
+
+class Event(models.Model):
+    title = models.CharField(max_length=127)
+    text = models.TextField()
+    pub_date = models.DateTimeField()
+    event_date = models.DateTimeField()
+    image = models.CharField(max_length=127, default=" ")
+    place = models.CharField(max_length=127)
+
+    def __str__(self):
+        return self.title
+
+def get_sentinel_user():
+    return User.objects.get_or_create(email="sentinel@user.object")
+
+class Event_register(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
+    event_pk = models.IntegerField(default=0)
+    has_visited = models.BooleanField(default=False)
+    qr = models.CharField(max_length=127, default=" ")
+
+    def __str__(self):
+        return self.user.email+" "+str(self.event_pk)
 
 
 
