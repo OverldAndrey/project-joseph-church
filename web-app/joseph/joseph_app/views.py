@@ -174,6 +174,7 @@ def poll_create_page(request):
 
 def poll_create(request, choice_number):
     new_poll = Poll(text=request.POST['text'], pub_date=datetime.datetime.now(), poll_type=request.POST['poll_type'])
+    new_poll.save()
     if request.FILES:
         f = request.FILES['poll_image']
         path = STATIC_PATH + FILE_PATH + "poll_img/{}/".format(new_poll.pk)
@@ -223,6 +224,7 @@ def event_create_page(request):
 def event_create(request):
     new_event = Event(title=request.POST['title'], text=request.POST['text'], pub_date=datetime.datetime.now(),
                       event_date=request.POST['event_date'], place=request.POST['place'])
+    new_event.save()
     if request.FILES:
         f = request.FILES['event_image']
         path = STATIC_PATH + FILE_PATH + "event_img/{}/".format(new_event.pk)
