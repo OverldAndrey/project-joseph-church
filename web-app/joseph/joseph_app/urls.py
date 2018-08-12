@@ -36,4 +36,7 @@ urlpatterns = [
 
     path('files/docx/<int:event_pk>', views.make_docx, name="make_docx"),
     path('files/xlsx/<int:event_pk>', views.make_xlsx, name="make_xlsx"),
+
+    path('application/retrieve/events', views.retrieve_event_list, name="retrieve_event_list"),
+    path('application/retrieve/registers/<int:event_pk>', views.retrieve_reg_list, name="retrieve_reg_list"),
 ]
