@@ -204,7 +204,7 @@ def poll_choice_reg(request, user_pk, poll_pk):
         for choice_pk in choice_list:
             choice = Poll_choice.objects.get(pk=choice_pk)
             choice.votes += 1
-            choice.save()
+            choice.save() 
         user_choice = User_poll_choice(user=user, poll=poll.pk, choice_mult="_".join(choice_list))
         user_choice.save()
 
