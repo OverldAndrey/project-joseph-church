@@ -39,7 +39,7 @@ class User(AbstractUser):
     second_name = models.CharField(max_length=255)
     avatar = models.CharField(max_length=511)
     date_of_birth = models.DateField(default="1970-01-01")
-    phone = models.CharField(max_length=18)
+    phone = models.CharField(max_length=20)
     pubnet = models.CharField(max_length=255)
     university = models.CharField(max_length=255)
     course = models.IntegerField(default=1)
