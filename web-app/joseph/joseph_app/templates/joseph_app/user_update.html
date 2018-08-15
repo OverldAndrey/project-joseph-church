@@ -1,0 +1,174 @@
+{% extends "joseph_app/base.html" %}
+
+{% load static %}
+
+
+{% block css %}
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/user_update.css' %}">
+{% endblock %}
+
+{% block header %}
+Редактировать профиль
+{% endblock %}
+
+{% block content %}
+                    <div class="page-content">
+                        <div class="form-group row no-gutters" style="position: relative; z-index: 121;">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <div class="dropright">
+                                    <a class="d-block dropdown-toggle btn btn-warning custom-input" style="background: rgb(82, 245, 255);" href="#" id="passwordChangeButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span>Сменить пароль</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="passwordChangeButton" style="margin-left: 10px;">
+                                        <form action="{% url 'joseph_app:password_change' user.pk %}" enctype="multipart/form-data" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="password_old" class="custom-label">Старый пароль</label>
+                                                <input class="form-control pwd-change-input" type="password" name="password_old" id="password_old" required="required" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password" class="custom-label">Новый пароль</label>
+                                                <input class="form-control pwd-change-input" type="password" name="password" id="password" required="required" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password_val" class="custom-label">Повторите пароль</label>
+                                                <input class="form-control pwd-change-input" type="password" name="password_val" id="password_val" required="required" />
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-secondary pwd-change-input">Change password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'joseph_app:update_user' user.pk %}" enctype="multipart/form-data" method="post" style="position: relative; z-index: 111;">
+                            {% csrf_token %}
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="name" class="col-2 col-form-label custom-label">Имя</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="name" id="name" required="required" value="{{ user.name }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="surname" class="col-2 col-form-label custom-label">Фамилия</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="surname" id="surname" required="required" value="{{ user.surname }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="second_name" class="col-2 col-form-label custom-label">Отчество</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="second_name" id="second_name" value="{{ user.second_name }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="date_of_birth" class="col-2 col-form-label custom-label">Дата рождения</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth|date:'d.m.Y' }}" aria-describedby="dob-help" />
+                                    <small id="dob-help" class="text-muted">Формат даты: ДД.ММ.ГГГГ</small>
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="phone" class="col-2 col-form-label custom-label">Телефон</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="tel" name="phone" id="phone" required="required" value="{{ user.phone }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="pubnet" class="col-2 col-form-label custom-label">Ссылка на соцсети</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="url" name="pubnet" id="pubnet" value="{{ user.pubnet }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="university" class="col-2 col-form-label custom-label">Вуз</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="university" id="university" required="required" value="{{ user.university }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="course" class="col-2 col-form-label custom-label">Курс</label>
+                                <div class="col-9">
+                                    <select class="form-control custom-input" name="course" id="course" required="required">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">Другое</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="reg_address" class="col-2 col-form-label custom-label">Адрес регистрации</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="reg_address" id="reg_address" value="{{ user.reg_address }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="cur_address" class="col-2 col-form-label custom-label">Фактический адрес</label>
+                                <div class="col-9">
+                                    <input class="form-control custom-input" type="text" name="cur_address" id="cur_address" value="{{ user.cur_address }}" />
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="organizations" class="col-2 col-form-label custom-label">Организации</label>
+                                <div class="col-9">
+                                    <textarea class="form-control custom-input" name="organizations" id="organizations" value="{{ user.organizations }}" rows=2></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="hobby" class="col-2 col-form-label custom-label">Хобби</label>
+                                <div class="col-9">
+                                    <textarea class="form-control custom-input" name="hobby" id="hobby" value="{{ user.hobby }}" rows=2></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col"></div>
+                                <label for="avatar" class="col-2 col-form-label custom-label">Аватар</label>
+                                <div class="col-9">
+                                    <div class="input-group custom-input">
+                                        <div class="custom-file">
+                                            <input class="custom-file-input" type="file" name="avatar" id="avatar" />
+                                            <label for="avatar" class="custom-file-label">Выберите файл</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row no-gutters">
+                                <div class="col-3"></div>
+                                <div class="col-9">
+                                    <button type="submit" class="btn custom-input" style="background-color: rgb(218, 71, 125);">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="stairs-update-user">
+                            <div id="stair-updusr1"></div>
+                            <div id="stair-updusr2"></div>
+                            
+                            <div id="stair-updusr3"></div>
+                            <div id="stair-updusr4"></div>
+                            
+                            <div id="stair-updusr5"></div>
+                        </div>
+                        
+                    </div>
+{% endblock %}
+
+{% block js %}
+        <script src="{% static 'joseph_app/templatedata/js/user_update.js' %}"></script>
+{% endblock %}

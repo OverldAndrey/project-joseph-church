@@ -39,7 +39,7 @@ def create_user(request):
     response = {
         "user" : None
     }
-    return render(request, "registration/update_user.html", response)
+    return render(request, "joseph_app/register.html", response)
 
 #Регистрация нового пользователя в базе данных, редирект на login_user
 def register_user(request):
@@ -117,7 +117,7 @@ def password_change(request, user_pk):
     email = request.user.email
     user = authenticate(request, username=email, password=pwd)
     if user is not None and user.is_authenticated:
-        pwd1 = request.POST['password']
+        pwd1 = request.POST['password_new']
         pwd2 = request.POST['password_val']
         if pwd1 == pwd2:
             logout(request)
