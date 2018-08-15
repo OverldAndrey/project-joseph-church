@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, logout, login
-from django.http import HttpResponse, HttpResponsePermanentRedirect
+from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.urls import reverse
 
 from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_register, Article, Article_Image
@@ -8,6 +8,8 @@ from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_regi
 import datetime
 import os
 import shutil
+import requests
+import json
 from docx import Document
 from docx.shared import Inches
 import openpyxl
@@ -235,13 +237,45 @@ def event_create(request):
                 destination.write(chunk)
         new_event.image = path[len(STATIC_PATH):]+f.name
     new_event.save()
+
+    payload = {
+
+ 'platform': 'vk',
+ 'users': 'everyone',
+ 'data': {
+          'title': Article.objects.get(pk=new_event.pk).title,
+          'post' : Article.objects.get(pk=new_event.pk).post,
+          #'image': 'https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+         }
+              }
+    headers = {'content-type': 'application/json'}
+
+    link = 'https://app.botmother.com/api/bot/action/ByqHjGiSX/BFCTDA0D8CsB1WDFWr7CsD5BlBkDXjLBoCImCwrCyBGBp_BLDCDIBODoBHCoClB3'
+
+    r = requests.post(link, data = json.dumps(payload), headers = headers)
+
+
+
     return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
 
 def event_register(request, event_pk):
     user = request.user
     reg_token = Event_register(user=user, event_pk=event_pk)
     reg_token.save()
+    link = 'events/visited/' + str(reg_token.pk)
+    qr_form = pyqrcode.create(link)
+    qr_form.png(STATIC_PATH + FILE_PATH + 'qrcodes/link-{}.png'.format(str(reg_token.pk)), scale=5,  module_color=[0, 0, 0],
+        background=[255,255,255])
+    req_token.qr = STATIC_PATH + FILE_PATH + 'qrcodes/link-{}.png'.format(str(reg_token.pk))
+    reg_token.save()
+
     return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
+
+def event_visited(request, reg_pk):
+    reg = Event_register.objects.get(pk=reg_pk)
+    reg.has_visited = True
+
+    return HttpResponse(reg.user.name + ' was registrated')
 
 def article_create_page(request):
     return render(request, "joseph_app/article_add.html")
@@ -249,6 +283,7 @@ def article_create_page(request):
 def article_create(request):
     new_article = Article(title=request.POST['title'], body=request.POST['body'], date=datetime.datetime.now())
     new_article.save()
+
     return HttpResponsePermanentRedirect(reverse("joseph_app:news"))
 
 def make_docx(request, event_pk):
@@ -341,7 +376,7 @@ def retrieve_event_list(request):
         "event_list" : event_list,
     }
     #return render(request, "temp.html", response) #(DBG)
-    return HttpResponse(response)
+    return JsonResponse(response)
 
 def retrieve_reg_list(request, event_pk):
     reg_obj_list = Event_register.objects.filter(event_pk=event_pk)
@@ -361,7 +396,6 @@ def retrieve_reg_list(request, event_pk):
         "reg_list" : reg_list,
     }
     #return render(request, "temp.html", response) #(DBG)
-    return HttpResponse(response)
+    return JsonResponse(response)
 
 # Create your views here.
-
