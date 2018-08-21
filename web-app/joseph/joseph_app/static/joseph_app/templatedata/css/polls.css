@@ -1,0 +1,21 @@
+.poll-text {
+    font-weight: 800;
+    color: white;
+}
+.poll-text-divide {
+    height: 15px;
+    width: auto;
+    background: white;
+    margin-bottom: 10px;
+}
+.poll-divide {
+    height: 0.2em;
+    width: 80%;
+    background: rgb(33, 21, 81);
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.poll-content {
+    background: rgb(33, 21, 81);
+    color: white;
+}

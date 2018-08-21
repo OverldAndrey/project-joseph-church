@@ -1,0 +1,18 @@
+.event-divide {
+    height: 0.2em;
+    width: 70%;
+    background: rgb(33, 21, 81);
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.event-data-divide {
+    height: 20px;
+    width: auto;
+    background: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.event-content {
+    background: rgb(33, 21, 81);
+    color: white;
+}

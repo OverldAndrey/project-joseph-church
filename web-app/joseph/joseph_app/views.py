@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.urls import reverse
+from django.utils import timezone
 
 from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_register, Article, Article_Image
 
@@ -9,17 +10,44 @@ import datetime
 import os
 import shutil
 import requests
+import pyqrcode
 import json
+import pytz
 from docx import Document
 from docx.shared import Inches
 import openpyxl
 from openpyxl.styles import Font
 
+# TZ = pytz.timezone('Europe/Moscow')
 STATIC_PATH = os.getcwd()+"/joseph_app/static"
 FILE_PATH = "/joseph_app/"
 
+def joseph_index(request):
+    return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
+
 def index(request):
-    return HttpResponse("Hale Joseph")
+    article_list = []
+    for article in Article.objects.order_by("-date")[:3]:
+        try:
+            image = article.article_image_set.earliest("pk")
+        except:
+            image = None
+        to_send = {
+            "article" : article,
+            "image" : image,
+        }
+        article_list.append(to_send)
+    event_list = []
+    for event in Event.objects.filter(event_date__gte=timezone.now()).order_by("event_date")[:3]:
+        to_send = {
+            "event" : event,
+        }
+        event_list.append(to_send)
+    response = {
+        "news" : article_list,
+        "events" : event_list,
+    }
+    return render(request, 'joseph_app/index.html', response)
 
 #Логин пользователя, редирект на user_cab
 def login_user(request):
@@ -34,18 +62,15 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
+    return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
 #Создание нового пользователя, рендер страницы регистрации update_user.html
 def create_user(request):
-    response = {
-        "user" : None
-    }
-    return render(request, "joseph_app/register.html", response)
+    return render(request, "joseph_app/register.html")
 
 #Регистрация нового пользователя в базе данных, редирект на login_user
 def register_user(request):
-    user = User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
+    user = User.objects.create_user(email=request.POST['email_new'], password=request.POST['password_new'])
     user.name = request.POST['name']
     user.surname = request.POST['surname']
     user.second_name = request.POST['second_name']
@@ -132,47 +157,40 @@ def user_cab(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
 
-        poll_list = []
-        for poll in user.user_poll_choice_set.all():
-            poll_list.append(Poll.objects.get(pk=poll.poll))
-        choice_list = []
-        for choice in user.user_poll_choice_set.all():
-            if choice.choice:
-                choice_list.append(Poll_choice.objects.get(pk=choice.choice))
-            else:
-                multiple_choices = []
-                for choice_pk in choice.choice_mult.split("_"):
-                    multiple_choices.append(Poll_choice.objects.get(pk=choice_pk))
-                choice_list.append(multiple_choices)
-
-        reg_list = []
-        for reg in user.event_register_set.all():
-            reg_list.append(reg)
         event_list = []
-        for event in user.event_register_set.all():
-            event_list.append(Event.objects.get(pk=event.event_pk))
+        if user.is_admin:
+            for event in Event.objects.all():
+                to_send = {
+                    "event" : event,
+                }
+                event_list.append(to_send)
+        else:
+            for event in user.event_register_set.all():
+                to_send = {
+                    "event" : Event.objects.get(pk=event.event_pk),
+                    "register" : event,
+                }
+                event_list.append(to_send)
 
         response = {
             "user" : user,
-            "reg_list" : reg_list,
             "event_list" : event_list,
-            "poll_list" : poll_list,
-            "choice_list" : choice_list,
         }
         return render(request, "joseph_app/cabinet.html", response)
     else:
-        return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
+        return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
 def polls(request):
     user = request.user
+    choice_list = []
+    for choice in user.user_poll_choice_set.all():
+        choice_list.append(choice.poll)
     response = {
         "polls_list" : Poll.objects.all(),
-        "user" : user
+        "choice_list" : choice_list,
+        "user" : user,
     }
     return render(request, "joseph_app/polls.html", response)
-
-def poll_create_page(request):
-    return render(request, "joseph_app/poll_add.html")
 
 def poll_create(request, choice_number):
     new_poll = Poll(text=request.POST['text'], pub_date=datetime.datetime.now(), poll_type=request.POST['poll_type'])
@@ -188,11 +206,14 @@ def poll_create(request, choice_number):
         new_poll.poll_image = path[len(STATIC_PATH):]+f.name
     new_poll.save()
     for i in range(1,choice_number+1):
-        new_choice = Poll_choice(poll=new_poll, text=request.POST['poll'+str(i)])
-        new_choice.save()
+        try:
+            new_choice = Poll_choice(poll=new_poll, text=request.POST['poll'+str(i)])
+            new_choice.save()
+        except:
+            break
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
-def poll_choice_reg(request, user_pk, poll_pk):
+def poll_choice_reg(request, poll_pk):
     user = request.user
     poll = Poll.objects.get(pk=poll_pk)
     if poll.poll_type == 1:
@@ -214,17 +235,58 @@ def poll_choice_reg(request, user_pk, poll_pk):
 
 def events(request):
     user = request.user
+    event_list = Event.objects.all().order_by("-event_date")
+    badge_list = []
+    for event in event_list:
+        if event.event_date < timezone.now():
+            to_send = {
+                "event" : event,
+                "badge" : -1,
+            }
+        if user is not None and not user.is_admin:
+            try:
+                reg = Event_register.objects.get(user=user, event_pk=event.pk)
+                to_send = {
+                    "event": event,
+                    "badge": reg.has_visited,
+                    "reg": reg,
+                }
+                if event.event_date < timezone.now() and reg.has_visited == False:
+                    to_send = {
+                        "event": event,
+                        "badge": -1,
+                    }
+            except:
+                to_send = {
+                    "event": event,
+                    "badge": 2,
+                }
+                if event.event_date < timezone.now():
+                    to_send = {
+                        "event": event,
+                        "badge": -1,
+                    }
+        else:
+            to_send = {
+                "event": event,
+                "badge": 3,
+            }
+            if event.event_date < timezone.now():
+                to_send = {
+                    "event": event,
+                    "badge": -1,
+                }
+        badge_list.append(to_send)
     response = {
-        "events_list" : Event.objects.all(),
+        "badge_list" : badge_list,
         "user" : user,
     }
     return render(request, "joseph_app/events.html", response)
 
-def event_create_page(request):
-    return render(request, "joseph_app/event_add.html")
-
 def event_create(request):
-    new_event = Event(title=request.POST['title'], text=request.POST['text'], pub_date=datetime.datetime.now(),
+    user = request.user
+
+    new_event = Event(title=request.POST['event_title'], text=request.POST['event_text'], pub_date=datetime.datetime.now(),
                       event_date=request.POST['event_date'], place=request.POST['place'])
     new_event.save()
     if request.FILES:
@@ -240,13 +302,16 @@ def event_create(request):
 
     payload = {
 
- 'platform': 'vk',
- 'users': 'everyone',
- 'data': {
-          'title': Article.objects.get(pk=new_event.pk).title,
-          'post' : Article.objects.get(pk=new_event.pk).post,
-          #'image': 'https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
-         }
+         'platform': 'vk',
+         'users': 'everyone',
+         'data': {
+                  'title': Event.objects.get(pk=new_event.pk).title,
+                  'text' : Event.objects.get(pk=new_event.pk).text,
+                  # 'pub_date' : Event.objects.get(pk=new_event.pk).pub_date,
+                  'event_date' : Event.objects.get(pk=new_event.pk).event_date.strftime("%Y-%m-%d %H:%M:%S"),
+                  'place' : Event.objects.get(pk=new_event.pk).place,
+                  # 'image': open(STATIC_PATH+Event.objects.get(pk=new_event.pk).image, "rb+"),
+                 }
               }
     headers = {'content-type': 'application/json'}
 
@@ -254,9 +319,7 @@ def event_create(request):
 
     r = requests.post(link, data = json.dumps(payload), headers = headers)
 
-
-
-    return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
+    return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
 
 def event_register(request, event_pk):
     user = request.user
@@ -266,7 +329,7 @@ def event_register(request, event_pk):
     qr_form = pyqrcode.create(link)
     qr_form.png(STATIC_PATH + FILE_PATH + 'qrcodes/link-{}.png'.format(str(reg_token.pk)), scale=5,  module_color=[0, 0, 0],
         background=[255,255,255])
-    req_token.qr = STATIC_PATH + FILE_PATH + 'qrcodes/link-{}.png'.format(str(reg_token.pk))
+    reg_token.qr = FILE_PATH + 'qrcodes/link-{}.png'.format(str(reg_token.pk))
     reg_token.save()
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
@@ -277,14 +340,23 @@ def event_visited(request, reg_pk):
 
     return HttpResponse(reg.user.name + ' was registrated')
 
-def article_create_page(request):
-    return render(request, "joseph_app/article_add.html")
-
 def article_create(request):
+    user = request.user
     new_article = Article(title=request.POST['title'], body=request.POST['body'], date=datetime.datetime.now())
     new_article.save()
+    if request.FILES:
+        for key in request.FILES.keys():
+            f = request.FILES[key]
+            path = STATIC_PATH+FILE_PATH+"article_gal/{}/".format(new_article.pk)
+            if not os.path.exists(path):
+                os.mkdir(path[:-1])
+            with open(path+f.name, "wb+") as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            new_gal_img = Article_Image(article=new_article, image=path[len(STATIC_PATH):]+f.name)
+            new_gal_img.save()
 
-    return HttpResponsePermanentRedirect(reverse("joseph_app:news"))
+    return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab"), args=(user.pk,))
 
 def make_docx(request, event_pk):
     document = Document()

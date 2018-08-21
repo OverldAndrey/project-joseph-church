@@ -1,10 +1,8 @@
 {% extends "joseph_app/base.html" %}
-
 {% load static %}
 
-
 {% block css %}
-        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/register.css' %}">
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/registr.css' %}">
 {% endblock %}
 
 {% block header %}
@@ -12,94 +10,98 @@
 {% endblock %}
 
 {% block content %}
-                    <div class="page-content">
-                        <!--<form action="#" method="post">
-                            <input type="password" name="password_old" id="password_old" />Old password<br>
-                            <input type="password" name="password" id="password" />New password<br>
-                            <input type="password" name="password_val" id="password_val" />Val password<br>
-                            <button type="submit">Change password</button>
-                        </form>-->
+                    <div class="page-content mt-5">
                         <form action="{% url 'joseph_app:register_user' %}" enctype="multipart/form-data" method="post" style="position: relative; z-index: 111;">
                             {% csrf_token %}
                             <div class="form-group row no-gutters">
                                 <div class="col">
                                     <div class="form-reg-divide"></div>
                                 </div>
-                                <label for="email" class="col-2 col-form-label custom-label">Email</label>
-                                <div class="col-9">
-                                    <input class="form-control custom-input" type="email" name="email" id="email" required="required" aria-describedby="email-help" />
-                                    <small id="email-help" class="text-muted">Пример: example@email.ru</small>
+                                <label for="email_new" class="col-2 col-form-label custom-label">Email</label>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <input class="form-control custom-input" type="email" name="email_new" id="email_new" required="required" aria-describedby="email-help" placeholder="example@email.ru" />
+<!--                                    <small id="email-help" class="text-muted">Пример: example@email.ru</small>-->
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
-                                <label for="password" class="col-2 col-form-label custom-label">Пароль</label>
-                                <div class="col-9">
-                                    <input class="form-control custom-input" type="password" name="password" id="password" required="required" />
+                                <label for="password_new" class="col-2 col-form-label custom-label">Пароль</label>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <input class="form-control custom-input" type="password" name="password_new" id="password_new" required="required" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="password_val" class="col-2 col-form-label custom-label">Пароль (подтверждение)</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="password" name="password_val" id="password_val" required="required" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="name" class="col-2 col-form-label custom-label">Имя</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="text" name="name" id="name" required="required" value="{{ user.name }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="surname" class="col-2 col-form-label custom-label">Фамилия</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="text" name="surname" id="surname" required="required" value="{{ user.surname }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="second_name" class="col-2 col-form-label custom-label">Отчество</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="text" name="second_name" id="second_name" value="{{ user.second_name }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="date_of_birth" class="col-2 col-form-label custom-label">Дата рождения</label>
-                                <div class="col-9">
-                                    <input class="form-control custom-input" type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth|date:'d.m.Y' }}" aria-describedby="dob-help" />
-                                    <small id="dob-help" class="text-muted">Формат даты: ДД.ММ.ГГГГ</small>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <input class="form-control custom-input" type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth|date:'d.m.Y' }}" aria-describedby="dob-help" placeholder="ДД.ММ.ГГГГ"/>
+<!--                                    <small id="dob-help" class="text-muted">Формат даты: ДД.ММ.ГГГГ</small>-->
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="phone" class="col-2 col-form-label custom-label">Телефон</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="tel" name="phone" id="phone" required="required" value="{{ user.phone }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="pubnet" class="col-2 col-form-label custom-label">Ссылка на соцсети</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="url" name="pubnet" id="pubnet" value="{{ user.pubnet }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="university" class="col-2 col-form-label custom-label">Вуз</label>
-                                <div class="col-9">
-                                    <input class="form-control custom-input" type="text" name="university" id="university" required="required" value="{{ user.university }}" />
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <input class="form-control custom-input" type="text" name="university" id="university" value="{{ user.university }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="course" class="col-2 col-form-label custom-label">Курс</label>
-                                <div class="col-9">
-                                    <select class="form-control custom-input" name="course" id="course" required="required">
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <select class="form-control custom-input" name="course" id="course">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -107,39 +109,44 @@
                                         <option value="5">Другое</option>
                                     </select>
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="reg_address" class="col-2 col-form-label custom-label">Адрес регистрации</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="text" name="reg_address" id="reg_address" value="{{ user.reg_address }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="cur_address" class="col-2 col-form-label custom-label">Фактический адрес</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <input class="form-control custom-input" type="text" name="cur_address" id="cur_address" value="{{ user.cur_address }}" />
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="organizations" class="col-2 col-form-label custom-label">Организации</label>
-                                <div class="col-9">
-                                    <textarea class="form-control custom-input" name="organizations" id="organizations" value="{{ user.organizations }}" rows=2></textarea>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <textarea class="form-control custom-input" style="resize: none;" name="organizations" id="organizations" value="{{ user.organizations }}" rows=2></textarea>
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="hobby" class="col-2 col-form-label custom-label">Хобби</label>
-                                <div class="col-9">
-                                    <textarea class="form-control custom-input" name="hobby" id="hobby" value="{{ user.hobby }}" rows=2></textarea>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <textarea class="form-control custom-input" style="resize: none;" name="hobby" id="hobby" value="{{ user.hobby }}" rows=2></textarea>
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
                                 <div class="col"></div>
                                 <label for="avatar" class="col-2 col-form-label custom-label">Аватар</label>
-                                <div class="col-9">
+                                <div class="col-8 col-lg-3 pl-4">
                                     <div class="input-group custom-input">
                                         <div class="custom-file">
                                             <input class="custom-file-input" type="file" name="avatar" id="avatar" />
@@ -147,12 +154,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                             <div class="form-group row no-gutters">
-                                <div class="col-3"></div>
-                                <div class="col-9">
-                                    <button type="submit" class="btn custom-input" style="background-color: rgb(251, 200, 83);">Зарегистрироваться</button>
+                                <div class="col"></div>
+                                <div class="col-2 custom-label"></div>
+                                <div class="col-8 col-lg-3 pl-4">
+                                    <button type="submit" class="btn custom-input w-100" style="background-color: rgb(251, 200, 83);">Зарегистрироваться</button>
                                 </div>
+                                <div class="col col-lg-6"></div>
                             </div>
                         </form>
                         
@@ -165,6 +175,8 @@
                             
                             <div id="stair-reg6"></div>
                             <div id="stair-reg7"></div>
+                            
+                            <div id="stair-reg8"></div>
                         </div>
                     </div>
 {% endblock %}

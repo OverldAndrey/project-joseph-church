@@ -1,0 +1,96 @@
+{% extends "joseph_app/base.html" %}
+{% load static %}
+
+{% block css %}
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/events.css' %}">
+{% endblock %}
+
+{% block header %}
+Мероприятия
+{% endblock %}
+
+{% block content %}
+
+                    <div class="page-content mt-5">
+                        {% for event in badge_list %}
+                        <div class="row no-gutters" style="position: relative; z-index: 110;">
+                            <div class="col-12 col-lg-5 p-2 py-lg-3 pl-lg-3 pr-lg-1">
+                                <div class="event-content h-100 p-2">
+                                    <h5>{{ event.event.title }}</h5>
+                                    <p class="d-none d-lg-inline-block event-p">
+                                        {{ event.event.text }}
+                                    </p>
+
+                                    {% if event.event.image != ' ' %}
+                                    <div class="d-block d-lg-none" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    {% else %}
+                                    <div class="d-block d-lg-none" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    {% endif %}
+                                    <div class="event-data-divide"></div>
+                                    <strong>Дата</strong>
+                                    <p>{{ event.event.event_date }}</p>
+                                    <strong>Место</strong>
+                                    <p>{{ event.event.place }}</p>
+
+                                    {% if event.badge == 1 %}
+                                    <span class="badge badge-success">Посещено</span><br>
+                                    {% elif event.badge == 0 %}
+                                    <span class="badge badge-warning">Не посещено</span><br>
+                                    {% elif event.badge == -1 %}
+                                    <span class="badge badge-danger">Завершено</span><br>
+                                    {% elif event.badge == 2 %}
+                                    <span class="badge badge-warning">Идет регистрация</span><br>
+                                    {% elif event.badge == 3 %}
+                                    <span class="badge badge-info">Идет регистрация</span><br>
+                                    {% endif %}
+
+                                    {% if not user.is_admin %}
+                                    <a href="{% url 'joseph_app:event_register' event.event.pk %}" role="button" class="d-block d-lg-none btn btn-warning btn-sm mt-3 w-100 {% if event.badge == 1 or event.badge == 0 or event.badge == -1 %}disabled{% endif %}" style="background: rgb(251, 200, 83);" >Зарегистрироваться</a>
+                                    {% else %}
+                                    <div class="d-block d-lg-none row">
+                                        <div class="col-6">
+                                            <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Docx</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-none d-lg-block col-lg-7 p-1 py-lg-3 pr-lg-3 pr-rg-1 event-img">
+                                {% if event.event.image != ' ' %}
+                                <div style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                {% else %}
+                                <div style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                {% endif %}
+                                
+                                {% if not user.is_admin %}
+                                <a href="{% url 'joseph_app:event_register' event.event.pk %}" role="button" class="d-block btn btn-warning btn-sm mt-4 w-100 {% if event.badge == 1 or event.badge == 0 or event.badge == -1 %}disabled{% endif %}" style="background: rgb(251, 200, 83);">Зарегистрироваться</a>
+                                {% else %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Docx</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                        <div class="event-divide"></div>
+                        
+                        {% endfor %}
+                        
+                        <div class="stairs-events">
+                            
+                        </div>
+                    </div>
+
+{% endblock %}
+
+{% block js %}
+        <script src="{% static 'joseph_app/templatedata/js/events.js' %}"></script>
+{% endblock %}

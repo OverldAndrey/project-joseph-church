@@ -1,7 +1,0 @@
-{% extends 'joseph_app/wrapper.html'%}
-
-{% block content %}
-   <h2 class = 'text-info'>{{article.title}}</h2>
-   <h6 class = 'text-info'>Опубликовано: {{article.date|date:'d:m:Y в H-i-s'}}</h6>
-   <p>{{article.body|safe|linebreaks}}</p>
-{% endblock %}

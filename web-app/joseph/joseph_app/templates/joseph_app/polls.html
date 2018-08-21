@@ -1,0 +1,75 @@
+{% extends "joseph_app/base.html" %}
+{% load static %}
+
+{% block css %}
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/polls.css' %}">
+{% endblock %}
+
+{% block header %}
+Опросы
+{% endblock %}
+
+{% block content %}
+
+                    <div class="page-content mt-5">
+                        {% for poll in polls_list %}
+                        <div class="row no-gutters" style="position: relative; z-index: 110;">
+                            <div class="col-8 p-2 py-lg-3 pl-lg-3 pr-lg-1 poll-img">
+                                {% if poll.image != ' ' %}
+                                <div style="height: inherit; background-image: url({% static poll.poll_image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 100%;"></div>
+                                {% else %}
+                                <div style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 100%;"></div>
+                                {% endif %}
+                            </div>
+                            <div class="col-4 p-2 py-lg-3 pr-lg-3 pl-lg-1">
+                                <div class="poll-content h-100 p-2">
+                                    <textarea class="form-control-plaintext d-inline-block text-center w-100 poll-text" style="resize: none;" readonly rows=4 disabled>{{ poll.text }}</textarea>
+                                    <div class="poll-text-divide"></div>
+                                    <form action="{% url 'joseph_app:poll_choice_reg' poll.pk %}" method="post">
+                                        {% csrf_token %}
+                                        {% for choice in poll.poll_choice_set.all %}
+                                        <div class="form-group mb-1">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                    {% if poll.poll_type == 1 %}
+                                                        <input type="radio" name="{{poll.pk}}choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />
+                                                    {% elif poll.poll_type == 2 %}
+                                                        <input type="checkbox" name="{{poll.pk}}choice" id="choice{{choice.pk}}" value="{{choice.pk}}" />
+                                                    {% endif %}
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" readonly value="{{choice.text}}">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        {{choice.votes}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        <div class="form-group">
+                                            {% if not poll.pk in choice_list %}
+                                            <button type="submit" class="btn btn-danger w-100">Голосовать</button>
+                                            {% else %}
+                                            <button type="button" class="btn btn-warning w-100" disabled>Вы уже голосовали</button>
+                                            {% endif %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="poll-divide mt-4"></div>
+                        {% endfor %}
+                        
+                        <div class="stairs-polls">
+                            
+                        </div>
+                    </div>
+
+{% endblock %}
+
+{% block js %}
+        <script src="{% static 'joseph_app/templatedata/js/polls.js' %}"></script>
+{% endblock %}

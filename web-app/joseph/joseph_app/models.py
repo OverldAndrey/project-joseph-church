@@ -110,7 +110,7 @@ class Event(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField()
     event_date = models.DateTimeField()
-    image = models.CharField(max_length=511, default=" ")
+    image = models.CharField(max_length=2047, default=" ")
     place = models.CharField(max_length=127)
 
     def __str__(self):
