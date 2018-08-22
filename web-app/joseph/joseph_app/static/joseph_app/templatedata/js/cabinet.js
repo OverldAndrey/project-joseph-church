@@ -1,27 +1,38 @@
 var TimerId = setInterval(function() {
     $(".stairs-cabinet").css("left", "-"+($("BODY").width()/12+2)+"px")
     $(".stairs-cabinet").css("width", $("BODY").width()+"px")
-    $("#stair-cab1").css("height", $("#saveButton").offset().top-$("#email_cab").offset().top+"px")
     $("#stair-cab1").css("left", $("#email_cab").offset().left-$(".frame").offset().left-8+"px")
     if ($("#persData").css("display") == "block") {
         $("#stair-cab1").css("width", $("#persData").offset().left-$("#email_cab").offset().left+"px")
+        $("#stair-cab1").css("height", $("#saveButton").offset().top-$("#email_cab").offset().top+"px")
     } else {
-        $("#stair-cab1").css("width", $("#avatarData").offset().left-$("#email_cab").offset().left+"px")
+        if ($("#avatarData").parent().css("display") == "block"){
+            $("#stair-cab1").css("width", $("#avatarData").offset().left-$("#email_cab").offset().left+"px")
+            $("#stair-cab1").css("height", $("#saveButton").offset().top-$("#email_cab").offset().top+"px")
+        } else {
+            $("#stair-cab1").css("width", $("BODY").width()-($("#email_cab").offset().left-8)*2+"px")
+            $("#stair-cab1").css("height", $("#saveButton").offset().top-$("#email_cab").offset().top+$("#email_cab").height()*1.5+"px")
+            $("#ev-create").addClass("border-0")
+        }
     }
     $("#avatarData").css("height", $("#avatarData").outerWidth()+"px")
     $("#avatarData > .cab-avatar").css("height", $("#avatarData").width()+"px")
     $("#stair-cab2").css("top", $("#avatarData").offset().top-$(".frame-border").offset().top+"px")
     $("#stair-cab3").css("top", $("#h4-event-header").offset().top-$(".frame-border").offset().top-5+"px")
+    $("#stair-cab3-r").css("top", $("#h4-event-header").offset().top-$(".frame-border").offset().top-5+"px")
     if ($("#h4-stat-header").offset()) {
         $("#stair-cab4").css("top", $("#h4-stat-header").offset().top-$(".frame-border").offset().top-5+"px")
+        $("#stair-cab4-r").css("top", $("#h4-stat-header").offset().top-$(".frame-border").offset().top-5+"px")
     } else {
         $("#stair-cab4").css("top", $("#h4-admin-header").offset().top-$(".frame-border").offset().top-5+"px")
+        $("#stair-cab4-r").css("top", $("#h4-admin-header").offset().top-$(".frame-border").offset().top-5+"px")
     }
     $("#stair-cab5").css("top", $("#passwordChangeButton").offset().top+$("#passwordChangeButton").outerHeight()-$(".frame-border").offset().top+10+"px")
     $("#stair-cab6").css("top", $("#passwordChangeButton").offset().top-$(".frame-border").offset().top+"px")
     $("#stair-cab7").css("height", $("#stair-cab6").offset().top-$("#stair-cab7").offset().top+"px")
 //    $(".event-p").css("min-height", $("#event-img1").height()/20*9+"px")
     $(".event-img").css("height", $(".event-img").width()*10/16*1.2+"px")
+    $(".img-resp").css("height", $(".img-resp").width()*9/16+"px")
     $(".qr").css("width", screen.availWidth+"px")
     $(".qr").css("height", screen.availHeight+"px")
     if (screen.availWidth > screen.availHeight) {

@@ -18,39 +18,40 @@
                             <div class="col-12 col-md-8 col-xl-5 p-3">
                                 <h4 class="mb-1">Личные данные</h4>
                                 <form action="{% url 'joseph_app:update_user' user.pk %}" enctype="multipart/form-data" method="post" style="position: relative; z-index: 111;">
+                                    {% csrf_token %}
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="email_cab" class="col-5 col-form-label custom-label">Email</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="email_cab" class="col-12 col-md-5 col-form-label mx-auto">Email</label>
+                                        <div class="col col-md-6">
                                             <input class="form-control-plaintext" style="padding-left: 0.75em;" type="text" name="email_cab" id="email_cab" readonly value="{{ user.email }}" />
                                         </div>
                                     </div>
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="phone" class="col-5 col-form-label custom-label">Телефон</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="phone" class="col-12 col-md-5 col-form-label mx-auto">Телефон</label>
+                                        <div class="col col-md-6">
                                             <input class="form-control" type="tel" name="phone" id="phone" required="required" value="{{ user.phone }}" />
                                         </div>
                                     </div>
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="pubnet" class="col-5 col-form-label custom-label">Ссылка на соцсети</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="pubnet" class="col-12 col-md-5 col-form-label mx-auto">Ссылка на соцсети</label>
+                                        <div class="col col-md-6">
                                             <input class="form-control" type="url" name="pubnet" id="pubnet" value="{{ user.pubnet }}" />
                                         </div>
                                     </div>
                                     {% if not user.is_admin %}
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="university" class="col-5 col-form-label custom-label">Вуз</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="university" class="col-12 col-md-5 col-form-label mx-auto">Вуз</label>
+                                        <div class="col col-md-6">
                                             <input class="form-control" type="text" name="university" id="university" required="required" value="{{ user.university }}" />
                                         </div>
                                     </div>
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="course" class="col-5 col-form-label custom-label">Курс</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="course" class="col-12 col-md-5 col-form-label mx-auto">Курс</label>
+                                        <div class="col col-md-6">
                                             <select class="form-control" name="course" id="course" required="required">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -62,9 +63,9 @@
                                     </div>
                                     {% endif %}
                                     <div class="form-group row no-gutters">
-                                        <div class="col"></div>
-                                        <label for="avatar" class="col-5 col-form-label custom-label">Аватар</label>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col"></div>
+                                        <label for="avatar" class="col-12 col-md-5 col-form-label mx-auto">Аватар</label>
+                                        <div class="col-12 col-md-6">
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input class="custom-file-input" type="file" name="avatar" id="avatar" />
@@ -74,82 +75,82 @@
                                         </div>
                                     </div>
                                     <div class="form-group row no-gutters">
-                                        <div class="col-6"></div>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col-6"></div>
+                                        <div class="col-12 col-md-6">
                                             <button class="btn btn-danger w-100" style="background: rgb(218, 71, 125); color: rgb(33, 21, 81);" type="button" data-toggle="collapse" data-target="#collapsePersData" aria-expanded="false" aria-controls="collapsePersData"> Раскрыть </button>
                                         </div> 
                                     </div>
                                     
                                     <div class="collapse" id="collapsePersData">
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="name" class="col-5 col-form-label custom-label">Имя</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="name" class="col-12 col-md-5 col-form-label mx-auto">Имя</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="name" id="name" required="required" value="{{ user.name }}" />
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="surname" class="col-5 col-form-label custom-label">Фамилия</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="surname" class="col-12 col-md-5 col-form-label mx-auto">Фамилия</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="surname" id="surname" required="required" value="{{ user.surname }}" />
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="second_name" class="col-5 col-form-label custom-label">Отчество</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="second_name" class="col-12 col-md-5 col-form-label mx-auto">Отчество</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="second_name" id="second_name" value="{{ user.second_name }}" />
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="date_of_birth" class="col-5 col-form-label custom-label">Дата рождения</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="date_of_birth" class="col-12 col-md-5 col-form-label mx-auto">Дата рождения</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="date_of_birth" id="date_of_birth" value="{{ user.date_of_birth|date:'d.m.Y' }}" aria-describedby="dob-help" placeholder="ДД.ММ.ГГГГ" />
 <!--                                                <small id="dob-help" class="text-muted">Формат даты: ДД.ММ.ГГГГ</small>-->
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="reg_address" class="col-5 col-form-label custom-label">Адрес регистрации</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="reg_address" class="col-12 col-md-5 col-form-label mx-auto">Адрес регистрации</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="reg_address" id="reg_address" value="{{ user.reg_address }}" />
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="cur_address" class="col-5 col-form-label custom-label">Фактический адрес</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="cur_address" class="col-12 col-md-5 col-form-label mx-auto">Фактический адрес</label>
+                                            <div class="col col-md-6">
                                                 <input class="form-control" type="text" name="cur_address" id="cur_address" value="{{ user.cur_address }}" />
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="organizations" class="col-5 col-form-label custom-label">Организации</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="organizations" class="col-12 col-md-5 col-form-label mx-auto">Организации</label>
+                                            <div class="col col-md-6">
                                                 <textarea class="form-control" style="resize: none;" name="organizations" id="organizations" value="{{ user.organizations }}" rows=2>{{ user.organizations }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row no-gutters">
-                                            <div class="col"></div>
-                                            <label for="hobby" class="col-5 col-form-label custom-label">Хобби</label>
-                                            <div class="col-6">
+                                            <div class="d-none d-md-block col"></div>
+                                            <label for="hobby" class="col-12 col-md-5 col-form-label mx-auto">Хобби</label>
+                                            <div class="col col-md-6">
                                                 <textarea class="form-control" style="resize: none;" name="hobby" id="hobby" value="{{ user.hobby }}" rows=2>{{ user.hobby }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                            
                                     <div class="form-group row no-gutters">
-                                        <div class="col-6"></div>
-                                        <div class="col-6">
+                                        <div class="d-none d-md-block col-6"></div>
+                                        <div class="col-12 col-md-6">
                                             <button type="submit" class="btn btn-info w-100" id="saveButton" style="background-color: rgb(82, 245, 255); color: rgb(33, 21, 81);">Сохранить</button>
                                         </div>
                                     </div>
                                 </form>
                                 <div class="form-group row no-gutters" style="position: relative; z-index: 121;">
-                                    <div class="col-6"></div>
-                                    <div class="col-6">
+                                    <div class="d-none d-md-block col-6"></div>
+                                    <div class="col-12 col-md-6">
                                         <div class="dropup">
                                             <a class="d-block dropdown-toggle btn btn-warning w-100" style="background: rgb(251, 200, 83);" href="#" id="passwordChangeButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <span style="color: rgb(33, 21, 81);">Сменить пароль</span>
@@ -192,7 +193,7 @@
                         <form action="{% url 'joseph_app:article_create' %}" enctype="multipart/form-data" method="post"  style="position: relative; z-index: 110;">
                             {% csrf_token %}
                             <div class="form-row p-2 p-lg-3">
-                                <div class="col-8">
+                                <div class="col-12 col-lg-8">
                                     <div class="form-group">
                                         <label for="title">Заголовок</label>
                                         <input type="text" class="form-control" name="title" id="title" />
@@ -202,7 +203,7 @@
                                         <textarea class="form-control" style="resize: none;" name="body" id="body" rows=10></textarea>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-12 col-lg-4">
                                     <div class="form-group">
                                         <label for="article_image1">Галерея</label>
                                         <div class="custom-file mb-1" id="article_image_el1">
@@ -221,12 +222,12 @@
                         <div class="adm-create-divide mb-4 ml-3"></div>
                         
                         <div class="row no-gutters" style="position: relative; z-index: 110;">
-                            <div class="col-7 p-2 p-lg-3" style="border-right-color: rgb(33, 21, 81); border-right-style: solid; border-right-width: 4px;">
+                            <div class="col-12 col-lg-7 p-2 p-lg-3" id="ev-create" style="border-right-color: rgb(33, 21, 81); border-right-style: solid; border-right-width: 4px;">
                                 <h5 class="">Мероприятие</h5>
                                 <form action="{% url 'joseph_app:event_create' %}" enctype="multipart/form-data" method="post">
                                     {% csrf_token %}
                                     <div class="form-row">
-                                        <div class="col-8">
+                                        <div class="col-12 col-lg-8">
                                             <div class="form-group">
                                                 <label for="event_title">Заголовок</label>
                                                 <input type="text" class="form-control" name="event_title" id="event_title" />
@@ -236,7 +237,7 @@
                                                 <textarea name="event_text" class="form-control" style="resize: none;" id="event_text" rows=5></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-12 col-lg-4">
                                             <div class="form-group">
                                                 <label for="event-date">Дата и время</label>
                                                 <input type="datetime-local" class="form-control" name="event_date" id="event_date" value="2018-08-16 19:00" />
@@ -256,18 +257,19 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-5 p-2 p-lg-3">
+                            <div class="d-block d-lg-none adm-create-divide mb-4 ml-3"></div>
+                            <div class="col-12 col-lg-5 p-2 p-lg-3">
                                 <h5 class="">Опрос</h5>
                                 <form action="{% url 'joseph_app:poll_create' 10 %}" enctype="multipart/form-data" method="post">
                                     {% csrf_token %}
                                     <div class="form-row">
-                                        <div class="col-8">
+                                        <div class="col-12 col-lg-8">
                                             <div class="form-group">
                                                 <label for="text">Текст</label>
                                                 <textarea class="form-control" name="text" id="text" style="resize: none;" rows=2></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-12 col-lg-4">
                                             <label>Тип опроса</label>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="poll_type" id="poll_type_1" value="1" />
@@ -297,13 +299,13 @@
                                         <div class="col">
                                             <button type="button" class="btn btn-secondary" onclick="add_poll_choice(3)" id="add_pc_field">+</button>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-12 col-lg-5 my-1 my-lg-0">
                                             <div class="custom-file" id="article_image_el1">
                                                 <input type="file" class="custom-file-input" name="poll_image" id="poll_image" />
                                                 <label class="custom-file-label" for="poll_image">Фото</label>
                                             </div>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-12 col-lg-5">
                                             <div class="form-group">
                                                 <button type="submit" class="btn btn-secondary w-100">Опубликовать</button>
                                             </div>
@@ -325,23 +327,18 @@
                                     </p>
                                     
                                     {% if event.event.image != ' ' %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                                     {% else %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                                     {% endif %}
-                                    <img src="{% static event.event.image %}" class="d-block d-lg-none img-fluid">
                                     <div class="event-data-divide"></div>
                                     <strong>Дата</strong>
                                     <p>{{ event.event.event_date }}</p>
                                     <strong>Место</strong>
                                     <p>{{ event.event.place }}</p>
-                                    <div class="d-block d-lg-none row">
-                                        <div class="col-6">
-                                            <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Docx</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
-                                        </div>
+                                    <div class="d-block d-lg-none">
+                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Список участников (docx)</a>
+                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Список участников (xlsx)</a>
                                     </div>
                                 </div>
                             </div>
@@ -353,10 +350,10 @@
                                 {% endif %}
                                 <div class="row">
                                     <div class="col-6">
-                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Docx</a>
+                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Список участников (docx)</a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
+                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Список участников (xlsx)</a>
                                     </div>
                                 </div>
                             </div>
@@ -378,9 +375,9 @@
                                     </p>
                                     
                                     {% if event.event.image != ' ' %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                                     {% else %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                                     {% endif %}
                                     <div class="event-data-divide"></div>
                                     <strong>Дата</strong>
@@ -428,8 +425,10 @@
                         <div id="stair-cab1"></div>
                         <div class="stairs-cabinet">
                             <div id="stair-cab2" class="d-none d-md-block"></div>
-                            <div id="stair-cab3"></div>
-                            <div id="stair-cab4"></div>
+                            <div id="stair-cab3" class="d-none d-md-block"></div>
+                            <div id="stair-cab3-r" class="d-block d-md-none"></div>
+                            <div id="stair-cab4" class="d-none d-md-block"></div>
+                            <div id="stair-cab4-r" class="d-block d-md-none"></div>
                             
                             <div id="stair-cab5"></div>
                             <div id="stair-cab6"></div>

@@ -8,6 +8,14 @@ var TimerId = setInterval(function() {
     $(".header").css("transform", "translate("+"-"+($("BODY").width()/12+2)+"px"+", -120px)")
     //$(".header > img").css("width", $("BODY").width()*0.7+"px")
     $(".header-divide").css("width", $("BODY").width()*0.4+"px")
+    if (window.innerWidth > 768) {
+        $("#nav-avatar").css("width", "10%")
+    } else {
+        $("#nav-avatar").css("width", "100%")
+        $("#nav-avatar > .nav-link").css("height", "50px;")
+        $("#nav-avatar > .nav-link > .nav-profile-img").css("height", "50px;")
+        $("#nav-avatar > .nav-link > .nav-profile-img").css("width", "50px;")
+    }
 }, 100)
 
 var TimerId1 = setInterval(function() {

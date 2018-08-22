@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.urls import reverse
 from django.utils import timezone
@@ -98,7 +99,7 @@ def register_user(request):
     user.save()
     return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
 
-#Изменение информации о пользователе, рендер update_user.html
+#Изменение информации о пользователе, рендер update_user.html ???
 def redact_user(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
@@ -153,6 +154,7 @@ def password_change(request, user_pk):
         return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
 
 #Рендер страницы личного кабинета cabinet.html
+@login_required(login_url="/joseph")
 def user_cab(request, user_pk):
     user = request.user
     if user is not None and user.is_authenticated and user.pk == user_pk:
@@ -180,6 +182,7 @@ def user_cab(request, user_pk):
     else:
         return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
+@login_required(login_url="/joseph")
 def polls(request):
     user = request.user
     choice_list = []
@@ -192,6 +195,7 @@ def polls(request):
     }
     return render(request, "joseph_app/polls.html", response)
 
+@login_required(login_url="/joseph")
 def poll_create(request, choice_number):
     new_poll = Poll(text=request.POST['text'], pub_date=datetime.datetime.now(), poll_type=request.POST['poll_type'])
     new_poll.save()
@@ -213,6 +217,7 @@ def poll_create(request, choice_number):
             break
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
+@login_required(login_url="/joseph")
 def poll_choice_reg(request, poll_pk):
     user = request.user
     poll = Poll.objects.get(pk=poll_pk)
@@ -233,6 +238,7 @@ def poll_choice_reg(request, poll_pk):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
+@login_required(login_url="/joseph")
 def events(request):
     user = request.user
     event_list = Event.objects.all().order_by("-event_date")
@@ -283,6 +289,7 @@ def events(request):
     }
     return render(request, "joseph_app/events.html", response)
 
+@login_required(login_url="/joseph")
 def event_create(request):
     user = request.user
 
@@ -321,6 +328,7 @@ def event_create(request):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
 
+@login_required(login_url="/joseph")
 def event_register(request, event_pk):
     user = request.user
     reg_token = Event_register(user=user, event_pk=event_pk)
@@ -337,9 +345,11 @@ def event_register(request, event_pk):
 def event_visited(request, reg_pk):
     reg = Event_register.objects.get(pk=reg_pk)
     reg.has_visited = True
+    reg.save()
 
     return HttpResponse(reg.user.name + ' was registrated')
 
+@login_required(login_url="/joseph")
 def article_create(request):
     user = request.user
     new_article = Article(title=request.POST['title'], body=request.POST['body'], date=datetime.datetime.now())
@@ -471,12 +481,14 @@ def retrieve_reg_list(request, event_pk):
     #return render(request, "temp.html", response) #(DBG)
     return JsonResponse(response)
 
+@login_required(login_url="/joseph")
 def file_upload_page(request):
     response = {
         'documents' : Document.objects.all
     }
     return  render(request, 'newspaper/file_upload.html', response)
 
+@login_required(login_url="/joseph")
 def file_upload(request):
     doc = Document(title = request.POST['title'], pub_date = datetime.datetime.now())
     doc.save()
@@ -493,7 +505,7 @@ def file_upload(request):
 
     return HttpResponsePermanentRedirect(reverse("newspaper:hello"))
 
-
+@login_required(login_url="/joseph")
 def file_download(request,doc_pk):
     import mimetypes
     mimetypes.init()
