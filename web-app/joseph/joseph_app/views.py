@@ -232,7 +232,7 @@ def poll_choice_reg(request, poll_pk):
         for choice_pk in choice_list:
             choice = Poll_choice.objects.get(pk=choice_pk)
             choice.votes += 1
-            choice.save() 
+            choice.save()
         user_choice = User_poll_choice(user=user, poll=poll.pk, choice_mult="_".join(choice_list))
         user_choice.save()
 
@@ -447,11 +447,7 @@ def retrieve_event_list(request):
     event_list = []
     for event in Event.objects.all():
         to_send = {
-            "pk" : event.pk,
-            "title" : event.title,
-            "text" : event.text,
-            "event_date" : event.event_date,
-            "place" : event.place,
+            "body" : "{1}&|&{2}&|&{3}&|&{4}&|&{5}".format(str(event.pk),event.title,event.text,event.event_date.strftime("%Y-%m-%d %H:%M:%S"),event.place)
         }
         event_list.append(to_send)
     response = {
@@ -465,14 +461,8 @@ def retrieve_reg_list(request, event_pk):
     reg_list = []
     for reg in reg_obj_list:
         to_send = {
-            "pk" : reg.pk,
-            "email" : reg.user.email,
-            "name" : reg.user.name,
-            "surname" : reg.user.surname,
-            "university" : reg.user.university,
-            "course" : reg.user.course,
-            "phone" : reg.user.phone,
-            "has_visited" : reg.has_visited,
+
+            "body" : "{1}&|&{2}&|&{3}&|&{4}&|&{5}&|&{6}&|&{7}&|&{8}".format(str(reg.pk),reg.user.email,reg.user.name, reg.user.surname, reg.user.university, str(reg.user.course), reg.user.phone, reg.has_visited)
         }
         reg_list.append(to_send)
     response = {
