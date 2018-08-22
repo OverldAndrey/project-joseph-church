@@ -451,14 +451,7 @@ def retrieve_reg_list(request, event_pk):
     reg_list = []
     for reg in reg_obj_list:
         to_send = {
-            "pk" : reg.pk,
-            "email" : reg.user.email,
-            "name" : reg.user.name,
-            "surname" : reg.user.surname,
-            "university" : reg.user.university,
-            "course" : reg.user.course,
-            "phone" : reg.user.phone,
-            "has_visited" : reg.has_visited,
+
             "body" : "{1}&|&{2}&|&{3}&|&{4}&|&{5}&|&{6}&|&{7}&|&{8}".format(str(reg.pk),reg.user.email,reg.user.name, reg.user.surname, reg.user.university, str(reg.user.course), reg.user.phone, reg.has_visited)
         }
         reg_list.append(to_send)
