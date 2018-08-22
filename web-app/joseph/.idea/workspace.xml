@@ -17,8 +17,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/joseph_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="507" column="36" lean-forward="false" selection-start-line="507" selection-start-column="36" selection-end-line="507" selection-end-column="36" />
+            <state relative-caret-position="911">
+              <caret line="467" column="16" lean-forward="true" selection-start-line="467" selection-start-column="16" selection-end-line="467" selection-end-column="16" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -29,8 +29,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/joseph_app/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1170">
-              <caret line="39" column="87" lean-forward="false" selection-start-line="39" selection-start-column="87" selection-end-line="39" selection-end-column="87" />
+            <state relative-caret-position="1104">
+              <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="37" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -699,8 +699,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/joseph_app/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1170">
-          <caret line="39" column="87" lean-forward="false" selection-start-line="39" selection-start-column="87" selection-end-line="39" selection-end-column="87" />
+        <state relative-caret-position="1104">
+          <caret line="41" column="10" lean-forward="true" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="37" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
@@ -709,8 +709,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/joseph_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="507" column="36" lean-forward="false" selection-start-line="507" selection-start-column="36" selection-end-line="507" selection-end-column="36" />
+        <state relative-caret-position="911">
+          <caret line="467" column="16" lean-forward="true" selection-start-line="467" selection-start-column="16" selection-end-line="467" selection-end-column="16" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

@@ -447,7 +447,7 @@ def retrieve_event_list(request):
     event_list = []
     for event in Event.objects.all():
         to_send = {
-            "body" : "{1}&|&{2}&|&{3}&|&{4}&|&{5}".format(str(event.pk),event.title,event.text,event.event_date.strftime("%Y-%m-%d %H:%M:%S"),event.place)
+            "body" : "{0}&|&{1}&|&{2}&|&{3}&|&{4}".format(str(event.pk), event.title, event.text, event.event_date.strftime("%Y-%m-%d %H:%M:%S"), event.place)
         }
         event_list.append(to_send)
     response = {
@@ -462,7 +462,7 @@ def retrieve_reg_list(request, event_pk):
     for reg in reg_obj_list:
         to_send = {
 
-            "body" : "{1}&|&{2}&|&{3}&|&{4}&|&{5}&|&{6}&|&{7}&|&{8}".format(str(reg.pk),reg.user.email,reg.user.name, reg.user.surname, reg.user.university, str(reg.user.course), reg.user.phone, reg.has_visited)
+            "body" : "{0}&|&{1}&|&{2}&|&{3}&|&{4}&|&{5}&|&{6}&|&{7}".format(str(reg.pk), reg.user.email, reg.user.name, reg.user.surname, reg.user.university, str(reg.user.course), reg.user.phone, reg.has_visited)
         }
         reg_list.append(to_send)
     response = {
