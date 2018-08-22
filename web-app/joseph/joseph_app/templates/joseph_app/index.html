@@ -82,7 +82,7 @@
                         <div class="carousel-item">
                         {% endif %}
                             <div class="row no-gutters">
-                                <div class="col-7">
+                                <div class="col-12 col-lg-7">
                                     <div class="position-relative art-img">
                                         {% if article.image.image and article.image.image != ' ' %}
                                         <div style="height: inherit; background-image: url({% static article.image.image %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
@@ -91,7 +91,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-5 car-content p-4">
+                                <div class="col col-lg-5 car-content p-4">
                                     <h4>{{ article.article.title }}</h4>
                                     <span>{{ article.article.body }}</span>
                                 </div>
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="index-news-stairs">
+        <div class="index-news-stairs d-none d-md-block">
             <div id="in-stair1"></div>
             <div id="in-stair2"></div>
             <div id="in-stair3"></div>
@@ -138,7 +138,7 @@
                         <div class="carousel-item">
                         {% endif %}
                             <div class="row no-gutters">
-                                <div class="col-7">
+                                <div class="col-12 col-lg-7">
                                     <div class="position-relative art-img">
                                         {% if event.event.image and event.event.image != ' ' %}
                                         <div style="height: inherit; background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
@@ -147,7 +147,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-5 car-content p-4">
+                                <div class="col col-lg-5 car-content p-4">
                                     <h4>{{ event.event.title }}</h4>
                                     <span>{{ event.event.text }}</span>
                                     <div class="event-data-divide"></div>
@@ -157,14 +157,28 @@
                                     <p>{{ event.event.place }}</p>
                                 </div>
                             </div>
+                        {% if forloop.counter == 1 %}
                         </div>
+                        {% else %}
                         </div>
+                        {% endif %}
+                        {% empty %}
+                            <div class="row no-gutters">
+                                <div class="col-12 col-lg-7">
+                                    <div class="position-relative art-img">
+                                        <div style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                    </div>
+                                </div>
+                                <div class="col col-lg-5 car-content p-4">
+                                    <strong>На данный момент никаких событий не намечается.</strong>
+                                </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-        <div class="index-events-stairs">
+        <div class="index-events-stairs d-none d-md-block">
             <div id="ie-stair1"></div>
             <div id="ie-stair2"></div>
             <div id="ie-stair3"></div>

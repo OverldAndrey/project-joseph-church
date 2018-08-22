@@ -8,10 +8,15 @@ var TimerId = setInterval(function() {
     $(".index-footer").css("margin-top", windowHeight+"px")
     $(".index-footer").css("min-height", windowHeight+"px")
     $(".frame").css("height", $(".index-news").height()+"px")
-    $("#index-login").css("margin-top", windowHeight/5+"px")
-    $("#index-cab").css("margin-top", windowHeight/5+"px")
+    if (window.innerWidth > 768) {
+        $("#index-login").css("margin-top", windowHeight/5+"px")
+        $("#index-cab").css("margin-top", windowHeight/5+"px")
+        $(".art-img").css("height", $(".frame").height()-$("#news-title").outerHeight(true)+"px")
+    } else {
+        $(".car-content").css("height", ($(".frame").height()-$("#news-title").outerHeight(true))*0.65+"px")
+        $(".art-img").css("height", $(".frame").height()-$(".car-content").outerHeight(true)-$("#news-title").outerHeight(true)+"px")
+    }
     $("#index-arrows").css("height", windowHeight/10+"px")
-    $(".art-img").css("height", $(".frame").height()-$("#news-title").outerHeight(true)+"px")
     $(".index-news-stairs").css("margin-top", windowHeight*2+"px")
     $(".index-events-stairs").css("margin-top", windowHeight*4+"px")
 },100)

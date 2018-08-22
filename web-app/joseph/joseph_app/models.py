@@ -128,6 +128,15 @@ class Event_register(models.Model):
     def __str__(self):
         return self.user.email+" "+str(self.event_pk)
 
+class Document(models.Model):
+    title = models.CharField(max_length = 120)
+    path = models.CharField(max_length = 500, default = ' ')
+    pub_date = models.DateTimeField(default = datetime.datetime.now())
+    size = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+
 
 
 # Create your models here.

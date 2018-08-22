@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonRespons
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_register, Article, Article_Image
+from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_register, Article, Article_Image, Document
 
 import datetime
 import os
@@ -13,7 +13,7 @@ import requests
 import pyqrcode
 import json
 import pytz
-from docx import Document
+from docx import Document as docxdoc
 from docx.shared import Inches
 import openpyxl
 from openpyxl.styles import Font
@@ -359,7 +359,7 @@ def article_create(request):
     return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab"), args=(user.pk,))
 
 def make_docx(request, event_pk):
-    document = Document()
+    document = docxdoc()
     document.add_heading(Event.objects.get(pk=event_pk).title, 0)
     table = document.add_table(rows=1, cols=8)
     hd_row = table.rows[0].cells
@@ -455,6 +455,7 @@ def retrieve_reg_list(request, event_pk):
     reg_list = []
     for reg in reg_obj_list:
         to_send = {
+            "pk" : reg.pk,
             "email" : reg.user.email,
             "name" : reg.user.name,
             "surname" : reg.user.surname,
@@ -469,5 +470,39 @@ def retrieve_reg_list(request, event_pk):
     }
     #return render(request, "temp.html", response) #(DBG)
     return JsonResponse(response)
+
+def file_upload_page(request):
+    response = {
+        'documents' : Document.objects.all
+    }
+    return  render(request, 'newspaper/file_upload.html', response)
+
+def file_upload(request):
+    doc = Document(title = request.POST['title'], pub_date = datetime.datetime.now())
+    doc.save()
+    if request.FILES:
+        f = request.FILES['document']
+        path = STATIC_PATH+FILE_PATH+"documents/"
+        with open(path+f.name, "wb+") as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+
+        doc.path = path[len(STATIC_PATH):]+f.name
+        doc.size = os.path.getsize(STATIC_PATH + doc.path)
+    doc.save()
+
+    return HttpResponsePermanentRedirect(reverse("newspaper:hello"))
+
+
+def file_download(request,doc_pk):
+    import mimetypes
+    mimetypes.init()
+    fname = Document.objects.get(pk=doc_pk).path
+    mtg = mimetypes.guess_type(STATIC_PATH + fname)
+    f = open(STATIC_PATH + fname, "rb", encoding=mtg[1])
+    response = HttpResponse(f, content_type=mtg[0])
+    response["Content-Disposition"] = "attachment; filename="+f.name.split('documents')[1]
+
+    return response
 
 # Create your views here.
