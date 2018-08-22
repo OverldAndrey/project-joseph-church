@@ -72,7 +72,7 @@
     position: absolute;
     left: 90%;
     top: 13em;
-    width: 21%;
+    width: 10%;
     height: 230px;
     z-index: 11;
 }
@@ -119,6 +119,6 @@
     position: absolute;
     left: 75%;
     top: 8em;
-    width: 26%;
+    width: 25%;
     height: 60px;
 }

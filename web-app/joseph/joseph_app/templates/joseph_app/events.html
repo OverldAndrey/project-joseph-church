@@ -22,9 +22,9 @@
                                     </p>
 
                                     {% if event.event.image != ' ' %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static event.event.image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
                                     {% else %}
-                                    <div class="d-block d-lg-none" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
+                                    <div class="d-block d-lg-none img-resp" style="background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 83.3%;"></div>
                                     {% endif %}
                                     <div class="event-data-divide"></div>
                                     <strong>Дата</strong>
@@ -47,13 +47,9 @@
                                     {% if not user.is_admin %}
                                     <a href="{% url 'joseph_app:event_register' event.event.pk %}" role="button" class="d-block d-lg-none btn btn-warning btn-sm mt-3 w-100 {% if event.badge == 1 or event.badge == 0 or event.badge == -1 %}disabled{% endif %}" style="background: rgb(251, 200, 83);" >Зарегистрироваться</a>
                                     {% else %}
-                                    <div class="d-block d-lg-none row">
-                                        <div class="col-6">
-                                            <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Docx</a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
-                                        </div>
+                                    <div class="d-block d-lg-none">
+                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Список участников (docx)</a>
+                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-3 w-100" style="background: rgb(251, 200, 83);">Список участников (xlsx)</a>
                                     </div>
                                     {% endif %}
                                 </div>
@@ -70,10 +66,10 @@
                                 {% else %}
                                 <div class="row">
                                     <div class="col-6">
-                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Docx</a>
+                                        <a href="{% url 'joseph_app:make_docx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Список участников (docx)</a>
                                     </div>
                                     <div class="col-6">
-                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Xlsx</a>
+                                        <a href="{% url 'joseph_app:make_xlsx' event.event.pk %}" role="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);">Список участников (xlsx)</a>
                                     </div>
                                 </div>
                                 {% endif %}

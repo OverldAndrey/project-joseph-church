@@ -1,11 +1,15 @@
 $("#navAdd1").css("width", $("#logo").width()+150+30+"px")
 $("#navAdd2").css("width", $("#logo").width()+300+30+"px")
 $("#navAdd3").css("width", $("#logo").width()+450+30+"px")
+$("#navAdd1").css("left", -$("#logo").width()-30+"px")
+$("#navAdd2").css("left", -$("#logo").width()-30+"px")
+$("#navAdd3").css("left", -$("#logo").width()-30+"px")
 
 
 var TimerId = setInterval(function() {
-    $(".header").css("width", $("BODY").width()*0.7+"px")
-    $(".header").css("transform", "translate("+"-"+($("BODY").width()/12+2)+"px"+", -120px)")
+    $(".header").css("width", $("BODY").width()+"px")
+    $(".header").css("height", "768px")
+    $(".header").css("transform", "translate("+"-"+($("BODY").width()/12+2)+"px"+", -128px)")
     //$(".header > img").css("width", $("BODY").width()*0.7+"px")
     $(".header-divide").css("width", $("BODY").width()*0.4+"px")
     if (window.innerWidth > 768) {

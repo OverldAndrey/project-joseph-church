@@ -102,11 +102,11 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input class="form-control form-control-sm" type="email" name="email" required="required" id="email" />
+                                <input class="form-control form-control-sm" type="email" name="email" required="required" id="email-resp" />
                             </div>
                             <div class="form-group">
                                 <label for="password">Пароль</label>
-                                <input class="form-control form-control-sm" type="password" name="password" required="required" id="password" />
+                                <input class="form-control form-control-sm" type="password" name="password" required="required" id="password-resp" />
                             </div>
                             <button class="btn btn-secondary btn-sm" type="submit">Войти</button>
                         </form>
@@ -160,7 +160,7 @@
                 <div class="frame">
                     <div class="frame-border"></div>
                     <div style="position: absolute; top: 0; left: 0; width: inherit; z-index: -1;">
-                        <div class="header"><img src="{% static 'joseph_app/templatedata/images/header-background.png' %}"></div>
+                        <div class="header" style="background-image: url({% static 'joseph_app/templatedata/images/header-background.png' %});"></div>
                     </div>
                     <h1 class="header-text">{% block header %}{% endblock %}</h1>
                     <div class="header-divide"></div>

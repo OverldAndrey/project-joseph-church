@@ -14,8 +14,8 @@
                     <div class="page-content mt-5">
                         {% for article in object_list %}
                         <div class="row no-gutters" style="position: relative; z-index: 110;">
-                            <div class="col-7 p-2 py-lg-3 pl-lg-3 pr-lg-1">
-                                <div class="carousel slide w-100" id="gal-carousel" data-ride="carousel" data-pause="false">
+                            <div class="d-none d-lg-block col-7 p-2 py-lg-3 pl-lg-3 pr-lg-1">
+                                <div class="carousel slide w-100" id="gal-carousel{{article.pk}}" data-ride="carousel" data-pause="false">
                                     <div class="carousel-inner">
                                         {% for image in article.article_image_set.all %}
                                         {% if forloop.counter == 1 %}
@@ -35,19 +35,55 @@
                                         {% else %}
                                         </div>
                                         {% endif %}
+                                        {% empty %}
+                                        <div class="position-relative art-img">
+                                            <div class="img-resp" style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                        </div>
                                         {% endfor %}
                                     </div>
-                                    <a href="#gal-carousel" class="carousel-control-prev" role="button" data-slide="prev">
+                                    <a href="#gal-carousel{{article.pk}}" class="carousel-control-prev" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     </a>
-                                    <a href="#gal-carousel" class="carousel-control-next" role="button" data-slide="next">
+                                    <a href="#gal-carousel{{article.pk}}" class="carousel-control-next" role="button" data-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-5 p-2 py-lg-3 pr-lg-3 pl-lg-1">
+                            <div class="col-12 col-lg-5 p-2 py-lg-3 pr-lg-3 pl-lg-1">
                                 <div class="article-content p-2">
                                     <h4>{{ article.title }}</h4>
+                                    <div class="d-block d-lg-none carousel slide w-100 img-resp" id="gal-carousel-resp{{article.pk}}" data-ride="carousel" data-pause="false">
+                                        <div class="carousel-inner">
+                                            {% for image in article.article_image_set.all %}
+                                            {% if forloop.counter == 1 %}
+                                            <div class="carousel-item active">
+                                            {% else %}
+                                            <div class="carousel-item">
+                                            {% endif %}
+                                                <div class="position-relative art-img">
+                                                    {% if image.image and image.image != ' ' %}
+                                                    <div class="img-resp" style="height: inherit; background-image: url({% static image.image %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                                    {% else %}
+                                                    <div class="img-resp" style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                                    {% endif %}
+                                                </div>
+                                            {% if forloop.counter == 1 %}
+                                            </div>
+                                            {% else %}
+                                            </div>
+                                            {% endif %}
+                                            {% empty %}
+                                            <div class="img-resp" style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                            {% endfor %}
+                                        </div>
+                                        <a href="#gal-carousel-resp{{article.pk}}" class="carousel-control-prev" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </a>
+                                        <a href="#gal-carousel-resp{{article.pk}}" class="carousel-control-next" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                    <div class="news-text-divide"></div>
                                     <span>{{ article.body }}</span>
                                 </div>
                             </div>

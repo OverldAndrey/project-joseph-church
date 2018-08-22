@@ -14,15 +14,16 @@
                     <div class="page-content mt-5">
                         {% for poll in polls_list %}
                         <div class="row no-gutters" style="position: relative; z-index: 110;">
-                            <div class="col-8 p-2 py-lg-3 pl-lg-3 pr-lg-1 poll-img">
+                            <div class="col-12 col-lg-8 px-2 pt-2 py-lg-3 pl-lg-3 pr-lg-1 poll-img">
                                 {% if poll.image != ' ' %}
                                 <div style="height: inherit; background-image: url({% static poll.poll_image %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 100%;"></div>
                                 {% else %}
                                 <div style="height: inherit; background-image: url({% static 'joseph_app/templatedata/images/Centr_Razvitiya-25.png' %}); background-position: center; background-size: cover; background-repeat: no-repeat; height: 100%;"></div>
                                 {% endif %}
                             </div>
-                            <div class="col-4 p-2 py-lg-3 pr-lg-3 pl-lg-1">
+                            <div class="col-12 col-lg-4 px-2 pb-2 py-lg-3 pr-lg-3 pl-lg-1">
                                 <div class="poll-content h-100 p-2">
+                                    <div class="d-block d-lg-none poll-text-divide" style="height: 5px;"></div>
                                     <textarea class="form-control-plaintext d-inline-block text-center w-100 poll-text" style="resize: none;" readonly rows=4 disabled>{{ poll.text }}</textarea>
                                     <div class="poll-text-divide"></div>
                                     <form action="{% url 'joseph_app:poll_choice_reg' poll.pk %}" method="post">

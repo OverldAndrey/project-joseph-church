@@ -30,7 +30,6 @@ var TimerId = setInterval(function() {
     $("#stair-cab5").css("top", $("#passwordChangeButton").offset().top+$("#passwordChangeButton").outerHeight()-$(".frame-border").offset().top+10+"px")
     $("#stair-cab6").css("top", $("#passwordChangeButton").offset().top-$(".frame-border").offset().top+"px")
     $("#stair-cab7").css("height", $("#stair-cab6").offset().top-$("#stair-cab7").offset().top+"px")
-//    $(".event-p").css("min-height", $("#event-img1").height()/20*9+"px")
     $(".event-img").css("height", $(".event-img").width()*10/16*1.2+"px")
     $(".img-resp").css("height", $(".img-resp").width()*9/16+"px")
     $(".qr").css("width", screen.availWidth+"px")

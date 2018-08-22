@@ -46,14 +46,14 @@
     position: absolute;
     top: 32em;
     left: 80%;
-    width: 100px;
+    width: 7%;
     height: 25em;
 }
 #stair-reg5 {
     position: absolute;
     top: 32em;
     left: 80%;
-    width: 25%;
+    width: 20%;
     height: 100px;
 }
 #stair-reg6 {
@@ -67,7 +67,7 @@
     position: absolute;
     top: 50%;
     left: 77%;
-    width: 25%;
+    width: 23%;
     height: 3%;
 }
 #stair-reg8 {
