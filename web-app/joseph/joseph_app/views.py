@@ -19,6 +19,12 @@ from docx import Document as docxdoc
 from docx.shared import Inches
 import openpyxl
 from openpyxl.styles import Font
+import matplotlib as mpl
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import csv
+
 
 # TZ = pytz.timezone('Europe/Moscow')
 STATIC_PATH = os.getcwd()+"/joseph_app/static"
@@ -154,6 +160,69 @@ def password_change(request, user_pk):
             user.save()
         return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
 
+def statistics_yearly(data_values1, data_values2):
+    # data_values1 = [x for x in np.random.randint(1,101,12)]
+    # data_values2 = [x for x in np.random.randint(1,101,12)]
+    months = ['сентябрь','октябрь','ноябрь','декабрь','январь','февраль','март','апрель','май','июнь','июль','август']
+    x_months = range(len(months))
+
+
+    dpi = 100
+    fig = plt.figure(dpi = dpi, figsize = (1280 / dpi, 720 / dpi) )
+    mpl.rcParams.update({'font.size': 10})
+
+    plt.title('Посещение мероприятий')
+
+    ax = plt.axes()
+    ax.yaxis.grid(True, zorder = 1)
+
+    # xs = range(len(data_names))
+    plt.bar([x + 0.05 for x in x_months], data_values1,
+            width = 0.2, color = '#DA477D', alpha = 0.9, label = (datetime.datetime.now()-datetime.timedelta(365)).strftime("%Y"),
+            zorder = 2)
+    if data_values2 != 0:
+        plt.bar([x + 0.3 for x in x_months], data_values2,
+            width = 0.2, color = '#52F5FF', alpha = 0.9, label = datetime.datetime.today.strftime("%Y"),
+            zorder = 2)
+
+    plt.xticks(x_months, months)
+
+    fig.autofmt_xdate(rotation = 25)
+
+    plt.legend(loc='upper right')
+    fig.savefig(STATIC_PATH + FILE_PATH + 'static/statistics/bars-{}.png'.format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
+
+# def stastics_monhthly(data_values1, data_values2):
+#         # data_values1 = [x for x in np.random.randint(1,101,12)]
+#         # data_values2 = [x for x in np.random.randint(1,101,12)]
+#         months = ['сентябрь','октябрь','ноябрь','декабрь','январь','февраль','март','апрель','май','июнь','июль','август']
+#         x_months = range(len(months))
+#
+#
+#         dpi = 100
+#         fig = plt.figure(dpi = dpi, figsize = (1280 / dpi, 720 / dpi) )
+#         mpl.rcParams.update({'font.size': 10})
+#
+#         plt.title('Посещение мероприятий')
+#
+#         ax = plt.axes()
+#         ax.yaxis.grid(True, zorder = 1)
+#
+#         # xs = range(len(data_names))
+#         plt.bar([x + 0.05 for x in x_months], data_values1,
+#                 width = 0.2, color = '#DA477D', alpha = 0.9, label = (datetime.datetime.now()-datetime.timedelta(365)).strftime("%Y"),
+#                 zorder = 2)
+#         plt.bar([x + 0.3 for x in x_months], data_values2,
+#                 width = 0.2, color = '#52F5FF', alpha = 0.9, label = datetime.datetime.today.strftime("%Y"),
+#                 zorder = 2)
+#         plt.xticks(x_months, months)
+#
+#         fig.autofmt_xdate(rotation = 25)
+#
+#         plt.legend(loc='upper right')
+#         fig.savefig(STATIC_PATH + FILE_PATH + 'static/statistics/bars-{}.png'.format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
+
+
 #Рендер страницы личного кабинета cabinet.html
 @login_required(login_url="/joseph")
 def user_cab(request, user_pk):
@@ -179,6 +248,8 @@ def user_cab(request, user_pk):
             "user" : user,
             "event_list" : event_list,
         }
+        # statistics_yearly()
+
         return render(request, "joseph_app/cabinet.html", response)
     else:
         return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
@@ -216,6 +287,24 @@ def poll_create(request, choice_number):
             new_choice.save()
         except:
             break
+
+    payload =   {
+
+                'platform': 'vk',
+                'users': 'everyone',
+                'data': {
+                        'title': new_poll.text,
+                        'choices': [choice.text for choice in Poll_choice.objects.filter(poll=new_poll)],
+                        'poll_pk': str(new_poll.pk)
+                        }
+                }
+    headers = {'content-type': 'application/json'}
+
+    link = 'https://app.botmother.com/api/bot/action/rkdex6ZLm/BjCrDvoDTCoCaCqD_CsB_CmDx1DzrBcCED6XXC7D_DycBOBQDCCC9D1HCHC6ByDX'
+
+
+    r = requests.post(link, data = json.dumps(payload), headers = headers)
+
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
 @login_required(login_url="/joseph")
