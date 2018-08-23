@@ -52,13 +52,13 @@
     background: rgb(218, 71, 125);
     z-index: 11;
 }
-#stair-cab1, #stair-cab4, #stair-cab4-r {
+#stair-cab1, #stair-cab4, #stair-cab4-r, #stair-cab11 {
     background: rgb(251, 200, 83);
 }
-#stair-cab2, #stair-cab5 {
+#stair-cab2, #stair-cab5, #stair-cab9 {
     background: rgb(218, 71, 125);
 }
-#stair-cab3, #stair-cab3-r, #stair-cab6, #stair-cab7, #stair-cab8 {
+#stair-cab3, #stair-cab3-r, #stair-cab6, #stair-cab7, #stair-cab8, #stair-cab10 {
     background: rgb(82, 245, 255);
 }
 #stair-cab1 {
@@ -121,4 +121,22 @@
     top: 8em;
     width: 25%;
     height: 60px;
+}
+#stair-cab9 {
+    position: absolute;
+    left: 0;
+    width: 33%;
+    height: 26px;
+}
+#stair-cab10 {
+    position: absolute;
+    left: 0;
+    width: 38%;
+    height: 26px;
+}
+#stair-cab11 {
+    position: absolute;
+    left: 55%;
+    width: 45%;
+    height: 26px;
 }

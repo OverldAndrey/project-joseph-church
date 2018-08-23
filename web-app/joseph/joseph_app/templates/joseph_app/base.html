@@ -32,8 +32,8 @@
                     <li class="nav-item nav-ustyle" id="nav1">
                         <div id="navAdd1">
                             <ul style="list-style-type: none; text-decoration: none;">
-                                <li>&nbsp;</li>
-                                <li>&nbsp;</li>
+                                <li><a href="{% url 'joseph_app:index' %}">На Главную</a></li>
+                                <li><a href="{% url 'joseph_app:index' %}#index-events">Ближайшие мероприятия</a></li>
                                 <li>&nbsp;</li>
                             </ul>
                             <div class="navBarrier"></div>
@@ -54,8 +54,8 @@
                     <li class="nav-item nav-ustyle" id="nav3">
                         <div id="navAdd3">
                             <ul style="list-style-type: none; text-decoration: none;">
-                                <li>Документы</li>
-                                <li>Контакты</li>
+                                <li><a href="{% url 'joseph_app:file_upload_page' %}">Документы</a></li>
+                                <li><a href="{% url 'joseph_app:index' %}#index-footer">Контакты</a></li>
                                 <li>&nbsp;</li>
                             </ul>
                             <div class="navBarrier"></div>
@@ -75,8 +75,8 @@
                     <li class="nav-item">
                         <p>Информация</p>
                         <ul style="list-style-type: none; text-decoration: none;">
-                            <li>Документы</li>
-                            <li>Контакты</li>
+                            <li><a href="{% url 'joseph_app:file_upload_page' %}">Документы</a></li>
+                            <li><a href="{% url 'joseph_app:index' %}#index-footer">Контакты</a></li>
                             <li>&nbsp;</li>
                         </ul>
                     </li>
@@ -155,7 +155,7 @@
             </div>
         </nav>
         
-        <div class="row justify-content-center no-gutters" style="margin-top: 100px;">
+        <div class="row justify-content-center no-gutters position-relative" style="margin-top: 100px; z-index: 10;">
             <div class="col-10" style="background-color: rgba(100, 100, 100, 0.0);">
                 <div class="frame">
                     <div class="frame-border"></div>
@@ -177,6 +177,27 @@
                     {% endblock %}
                     
                 </div>
+            </div>
+        </div>
+        
+        <div class="background-parallax">
+            <div id="parallax1">
+                <div class="parallax-piece1" style="background: red;"></div>
+                <div class="parallax-piece1" style="background: red;"></div>
+                <div class="parallax-piece1" style="background: red;"></div>
+                <div class="parallax-piece1" style="background: red;"></div>
+            </div>
+            <div id="parallax2">
+                <div class="parallax-piece2" style="background: blue;"></div>
+                <div class="parallax-piece2" style="background: blue;"></div>
+                <div class="parallax-piece2" style="background: blue;"></div>
+                <div class="parallax-piece2" style="background: blue;"></div>
+            </div>
+            <div id="parallax3">
+                <div class="parallax-piece3" style="background: green;"></div>
+                <div class="parallax-piece3" style="background: green;"></div>
+                <div class="parallax-piece3" style="background: green;"></div>
+                <div class="parallax-piece3" style="background: green;"></div>
             </div>
         </div>
         

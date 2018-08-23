@@ -189,7 +189,7 @@
                         {% if user.is_admin %}
                         <h4 class="ml-2 ml-lg-3 mt-4 mb-4" id="h4-event-header">Создать</h4>
                         
-                        <h5 class="ml-2 ml-lg-3">Новость</h5>
+                        <h5 class="ml-2 ml-lg-3" id="article-create-h5">Новость</h5>
                         <form action="{% url 'joseph_app:article_create' %}" enctype="multipart/form-data" method="post"  style="position: relative; z-index: 110;">
                             {% csrf_token %}
                             <div class="form-row p-2 p-lg-3">
@@ -223,7 +223,7 @@
                         
                         <div class="row no-gutters" style="position: relative; z-index: 110;">
                             <div class="col-12 col-lg-7 p-2 p-lg-3" id="ev-create" style="border-right-color: rgb(33, 21, 81); border-right-style: solid; border-right-width: 4px;">
-                                <h5 class="">Мероприятие</h5>
+                                <h5 id="event-create-h5">Мероприятие</h5>
                                 <form action="{% url 'joseph_app:event_create' %}" enctype="multipart/form-data" method="post">
                                     {% csrf_token %}
                                     <div class="form-row">
@@ -259,7 +259,7 @@
                             </div>
                             <div class="d-block d-lg-none adm-create-divide mb-4 ml-3"></div>
                             <div class="col-12 col-lg-5 p-2 p-lg-3">
-                                <h5 class="">Опрос</h5>
+                                <h5 id="poll-create-h5">Опрос</h5>
                                 <form action="{% url 'joseph_app:poll_create' 10 %}" enctype="multipart/form-data" method="post">
                                     {% csrf_token %}
                                     <div class="form-row">
@@ -401,8 +401,7 @@
                                 <button type="button" class="btn btn-warning btn-sm mt-4 w-100" style="background: rgb(251, 200, 83);" onclick="show_qr({{event.register.event_pk}})">Показать QR-код</button>
                             </div>
                         </div>
-                        <div class="qr d-none" id="qr-{{event.register.event_pk}}">
-                            <button class="close position-absolute" style="top: 2%; right: 2%;" aria-label="Close" onclick="hide_qr({{event.register.event_pk}})"><span aria-hidden="true">&times;</span></button>
+                        <div class="qr d-none" id="qr-{{event.register.event_pk}}" onclick="hide_qr({{event.register.event_pk}})">
                             <div style="background-image: url({% static event.register.qr %}); background-position: center; background-size: cover; background-repeat: no-repeat; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-55%);"></div>
                         </div>
                         <div class="event-divide"></div>
@@ -434,6 +433,10 @@
                             <div id="stair-cab6"></div>
                             <div id="stair-cab7"></div>
                             <div id="stair-cab8"></div>
+                            
+                            <div id="stair-cab9"></div>
+                            <div id="stair-cab10"></div>
+                            <div id="stair-cab11"></div>
                         </div>
                         
                     </div>

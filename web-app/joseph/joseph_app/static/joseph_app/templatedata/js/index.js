@@ -1,4 +1,4 @@
-var TimerId = setInterval(function() {
+var TimerId1 = function() {//setInterval(function() {
     windowHeight = window.innerHeight
     $(".index-top").css("min-height", windowHeight+"px")
     $(".index-news").css("margin-top", windowHeight+"px")
@@ -19,7 +19,13 @@ var TimerId = setInterval(function() {
     $("#index-arrows").css("height", windowHeight/10+"px")
     $(".index-news-stairs").css("margin-top", windowHeight*2+"px")
     $(".index-events-stairs").css("margin-top", windowHeight*4+"px")
-},100)
+}//,100)
+
+TimerId1()
+
+$(function() {
+    $(window).resize(TimerId1)
+})
 
 $("#iarrow1").css("opacity", 1)
 setTimeout(function(){

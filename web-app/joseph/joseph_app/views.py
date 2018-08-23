@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponsePermanentRedirect, JsonResponse
 from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_register, Article, Article_Image, Document
 
@@ -342,6 +343,7 @@ def event_register(request, event_pk):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
 
+@csrf_exempt
 def event_visited(request, reg_pk):
     reg = Event_register.objects.get(pk=reg_pk)
     reg.has_visited = True
@@ -474,9 +476,9 @@ def retrieve_reg_list(request, event_pk):
 @login_required(login_url="/joseph")
 def file_upload_page(request):
     response = {
-        'documents' : Document.objects.all
+        'documents' : Document.objects.all()
     }
-    return  render(request, 'newspaper/file_upload.html', response)
+    return  render(request, 'joseph_app/docs.html', response)
 
 @login_required(login_url="/joseph")
 def file_upload(request):
@@ -493,7 +495,7 @@ def file_upload(request):
         doc.size = os.path.getsize(STATIC_PATH + doc.path)
     doc.save()
 
-    return HttpResponsePermanentRedirect(reverse("newspaper:hello"))
+    return HttpResponsePermanentRedirect(reverse("joseph_app:file_upload_page"))
 
 @login_required(login_url="/joseph")
 def file_download(request,doc_pk):
