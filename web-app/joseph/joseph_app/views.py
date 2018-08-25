@@ -444,6 +444,21 @@ def article_create(request):
                     destination.write(chunk)
             new_gal_img = Article_Image(article=new_article, image=path[len(STATIC_PATH):]+f.name)
             new_gal_img.save()
+    payload = {
+
+             'platform': 'vk',
+             'users': 'everyone',
+             'data': {
+                      'title': Articles.objects.get(pk=article_pk).title,
+                      'post' : Articles.objects.get(pk=article_pk).post,
+                      'image': 'https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
+                     }
+              }
+    headers = {'content-type': 'application/json'}
+
+    link = 'https://app.botmother.com/api/bot/action/B1KnTxmUm/BwKC_BeagBuD6B3DPcDmB0tCqDqBf-CKCdWGbzCxCIDk7C6DjCjB-DGB7DyLdCbB'
+
+    r = requests.post(link, data = json.dumps(payload), headers = headers)
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab"), args=(user.pk,))
 
