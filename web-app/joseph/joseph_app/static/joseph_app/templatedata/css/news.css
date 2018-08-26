@@ -1,0 +1,22 @@
+.article-content {
+    background-color: rgb(33, 21, 81);
+    color: white;
+    height: 100%;
+}
+.article-divide {
+    height: 0.2em;
+    width: 55%;
+    background: rgb(33, 21, 81);
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.news-text-divide {
+    height: 15px;
+    width: auto;
+    margin-top: 10px;
+    background: white;
+    margin-bottom: 10px;
+}
+.art-img {
+    height: inherit;
+}
