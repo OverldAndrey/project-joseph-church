@@ -1,0 +1,60 @@
+{% extends "joseph_app/base.html" %}
+{% load static %}
+
+{% block css %}
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/docs.css' %}">
+{% endblock %}
+
+{% block header %}
+Документы
+{% endblock %}
+
+{% block content %}
+
+                    <div class="page-content mt-5">
+                        {% if user.is_admin %}
+                            <h4 class="ml-2 ml-lg-3 mt-4 mb-4" style="position: relative; z-index: 110;">Добавить документ</h4>
+                            <form action="{% url 'joseph_app:file_upload' %}" method="post" enctype="multipart/form-data" style="position: relative; z-index: 110;">
+                                {% csrf_token %}
+                                <div class="form-row p-2 p-lg-3">
+                                    <div class="col-12 col-lg-7">
+                                        <input type="text" name="title" id="title" class="form-control" placeholder="Название">
+                                    </div>
+                                    <div class="col-12 col-lg-2 my-2 my-lg-0">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="document" id="document" >
+                                            <label class="custom-file-label" for="poll_image">Файл</label>
+                                         </div>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-secondary w-100">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                        {% for doc in documents %}
+                            <div class="ml-2 mt-4 mb-4 doc position-relative" style="z-index: 110;">
+                                <div class="pl-3" style="position: relative; z-index: 109;">
+                                    <h4 style="position: relative; z-index: 111;"><a href="{% url 'joseph_app:file_download' doc.pk %}" style="color: rgb(33, 21, 81);">{{ doc.title }}</a></h4>
+                                    <span>{{ doc.pub_date|date:"d.m.Y" }}</span>
+                                    <span class="ml-4" style="font-size: 0.8em; font-weight: lighter; color: rgb(150, 150, 150);">{{ doc.size|filesizeformat }}</span>
+                                </div>
+                                {% if forloop.counter|add:"1"|divisibleby:"2" %}
+                                <div class="docs-back" style="background: rgb(82, 245, 255);"></div>
+                                {% else %}
+                                <div class="docs-back" style="background: rgb(251, 200, 83);"></div>
+                                {% endif %}
+                                <div class="frame-part"></div>
+                            </div>
+                        {% empty %}
+                            <h5 class="ml-2 ml-lg-3 mt-4 mb-5">Здесь еще нет ни одного документа</h5>
+                        {% endfor %}
+                    </div>
+
+{% endblock %}
+
+{% block js %}
+        <script src="{% static 'joseph_app/templatedata/js/docs.js' %}"></script>
+{% endblock %}

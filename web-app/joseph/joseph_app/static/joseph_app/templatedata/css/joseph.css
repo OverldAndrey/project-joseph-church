@@ -1,0 +1,214 @@
+@font-face{
+    font-family: 'HelveticaNeueCyr';
+    src: url('HelveticaNeueCyr-Bold.ttf') format('truetype');
+    font-weight: Bold;
+	font-style: normal;
+}
+@font-face{
+    font-family: 'MyriadPro';
+    src: url('MyriadPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+	font-style: normal;
+}
+
+BODY{
+    cursor: default;
+    font-family: 'MyriadPro', 'Open sans', sans-serif;
+    color: rgb(33, 21, 81);
+    overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'HelveticaNeueCyr', 'Open Sans', sans-serif;
+}
+
+a:hover {
+    color: rgb(251, 200, 83);
+}
+
+.navbar-custom {
+    position: relative;
+    z-index: 500;
+    background-color: rgb(33, 21, 81);
+    height: 60px;
+    padding: 0;
+}
+.nav-ustyle {
+    color: white;
+    padding: 18px;
+    width: 150px;
+    height: 60px;
+}
+.nav-ustyle:hover p {
+    color: rgb(33, 21, 81);
+}
+.nav-profile {
+    margin-right: 8px;
+    color: white;
+    font-size: 0.7em;
+}
+.nav-profile-img {
+    border-radius: 50% 50%;
+    height: 34px;
+    width: 34px;
+    float: left;
+}
+.profile-dropdown {
+    min-width: inherit;
+    text-align: right;
+    font-size: 0.7em;
+    left: auto;
+    right: 5px;;
+}
+.navBarrier {
+    position: absolute;
+    top: 5px;
+    left: 22px;
+    height: 120px;
+    width: 8px;
+    background-color: rgb(33, 21, 81);
+}
+.nav-drop-link {
+    text-decoration: none;
+    color: rgb(33, 21, 81);
+}
+.footer {
+    margin-top: 50px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background: rgb(33, 21, 81);
+    color: white;
+    z-index: 150;
+}
+.fixed {
+    position: fixed;
+}
+.footer-h4 {
+    font-size: 0.6em;
+}
+.footer-h5 * {
+    font-size: 0.7em;
+    margin: 0;
+}
+.frame {
+    width: 100%;
+    height: 100%;
+}
+.frame-border {
+    position: absolute;
+    top: 0;
+    width: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 110;
+    border-color: rgb(33, 21, 81);
+    border-style: solid;
+    border-width: 0.2em;
+}
+.header {
+    position: absolute;
+    top: -70px;
+    left: 0;
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.header-text {
+    margin-left: 0.4em;
+    margin-top: 0.25em;
+    margin-bottom: 0.3em;
+    color: white;
+}
+.header-text-resp {
+    font-size: 1.75rem;
+}
+.header-divide {
+    height: 0.2em;
+    margin-left: 0.8em;
+    background: rgb(255,255,255);
+    margin-bottom: 1.2em;
+}
+.page-content {
+    width: inherit;
+}
+.custom-input {
+    
+}
+.custom-label {
+    margin-left: 2em;
+}
+.background-parallax {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+.parallax-piece1, .parallax-piece2, .parallax-piece3 {
+    position: absolute;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+}
+
+
+
+
+#nav-avatar {
+    
+}
+#nav1:hover {
+    background-color: rgba(251, 200, 83, 0.75);
+    color: white;
+}
+#nav2:hover {
+    background-color: rgba(218, 71, 125, 0.75);
+    color: white;
+}
+#nav3:hover {
+    background-color: rgba(82, 245, 255, 0.75);
+    color: white;
+}
+#navAdd1, #navAdd2, #navAdd3 {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    color: rgb(33, 21, 81);
+    display: none;
+}
+#navAdd1 a, #navAdd2 a, #navAdd3 a {
+    color: rgb(33, 21, 81);
+}
+#navAdd1 a:hover, #navAdd2 a:hover, #navAdd3 a:hover {
+    color: rgb(33, 21, 81);
+}
+#navAdd1 {
+    background-color: rgb(251, 200, 83);
+}
+#navAdd2 {
+    background-color: rgb(218, 71, 125);
+}
+#navAdd3 {
+    background-color: rgb(82, 245, 255);
+}
+#nav1:hover #navAdd1, #nav2:hover #navAdd2, #nav3:hover #navAdd3 {
+    display: block;
+}
+#parallax1 {
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+}
+#parallax2 {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+}
+#parallax3 {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+}
+
+
+

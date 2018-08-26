@@ -1,0 +1,236 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <meta name=description content="">
+        <meta name=keywords content="">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'joseph_app/templatedata/css/joseph.css' %}">
+        {% block css %}{% endblock %}
+
+        <title>Frame design example</title>
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark navbar-custom">
+            <a class="navbar-brand" href="{% url 'joseph_app:index' %}" style="padding: 0; margin-right: 30px;" id="logo">
+                <img src="{% static 'joseph_app/templatedata/images/Logo_simple-05.png' %}" height="60px" alt="Центр Развития">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNav" aria-controls="collapsingNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse position-relative" id="collapsingNav" style="background-color: rgb(33, 21, 81); z-index: 999;">
+                <ul class="d-none d-md-flex navbar-nav mr-auto">
+                    <li class="nav-item nav-ustyle" id="nav1">
+                        <div id="navAdd1">
+                            <ul style="list-style-type: none; text-decoration: none;">
+                                <li><a href="{% url 'joseph_app:index' %}">На Главную</a></li>
+                                <li><a href="{% url 'joseph_app:index' %}#index-events">Ближайшие мероприятия</a></li>
+                                <li>&nbsp;</li>
+                            </ul>
+                            <div class="navBarrier"></div>
+                        </div>
+                        <p>Главная</p>
+                    </li>
+                    <li class="nav-item nav-ustyle" id="nav2">
+                        <div id="navAdd2">
+                            <ul style="list-style-type: none; text-decoration: none;">
+                                <li><a href="{% url 'joseph_app:news' %}">Новости</a></li>
+                                <li><a href="{% url 'joseph_app:events' %}">Мероприятия</a></li>
+                                <li><a href="{% url 'joseph_app:polls' %}">Опросы</a></li>
+                            </ul>
+                            <div class="navBarrier"></div>
+                        </div>
+                        <p>События</p>
+                    </li>
+                    <li class="nav-item nav-ustyle" id="nav3">
+                        <div id="navAdd3">
+                            <ul style="list-style-type: none; text-decoration: none;">
+                                <li><a href="{% url 'joseph_app:file_upload_page' %}">Документы</a></li>
+                                <li><a href="{% url 'joseph_app:index' %}#index-footer">Контакты</a></li>
+                                <li>&nbsp;</li>
+                            </ul>
+                            <div class="navBarrier"></div>
+                        </div>
+                        <p>Информация</p>
+                    </li>
+                </ul>
+                <ul class="d-flex d-md-none navbar-nav mr-auto p-2" style="color: white;">
+                    <li class="nav-item">
+                        <p>События</p>
+                        <ul style="list-style-type: none; text-decoration: none;">
+                            <li><a href="{% url 'joseph_app:news' %}">Новости</a></li>
+                            <li><a href="{% url 'joseph_app:events' %}">Мероприятия</a></li>
+                            <li><a href="{% url 'joseph_app:polls' %}">Опросы</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <p>Информация</p>
+                        <ul style="list-style-type: none; text-decoration: none;">
+                            <li><a href="{% url 'joseph_app:file_upload_page' %}">Документы</a></li>
+                            <li><a href="{% url 'joseph_app:index' %}#index-footer">Контакты</a></li>
+                            <li>&nbsp;</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <p>Главная</p>
+                        <ul style="list-style-type: none; text-decoration: none;">
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <p>{{ user.name }}</p>
+                        <ul style="list-style-type: none; text-decoration: none;">
+                            <li style="font-size: 1.1em; font-weight: lighter;">{{ user.email }}</li>
+                            <li><a href="{% url 'joseph_app:user_cab' user.pk %}">Профиль</a></li>
+                            <li><a href="{% url 'joseph_app:logout_user' %}">Выйти</a></li>
+                        </ul>
+                        {% else %}
+                        <p>Вход</p>
+                        <form class="p-2" style="font-size: 0.8rem;" action="{% url 'joseph_app:login_user' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input class="form-control form-control-sm" type="email" name="email" required="required" id="email-resp" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Пароль</label>
+                                <input class="form-control form-control-sm" type="password" name="password" required="required" id="password-resp" />
+                            </div>
+                            <button class="btn btn-secondary btn-sm" type="submit">Войти</button>
+                        </form>
+                        <div class="dropdown-divide"></div>
+                        <a class="dropdown-item" href="{% url 'joseph_app:create_user' %}">Зарегистрироваться</a>
+                        {% endif %}
+                    </li>
+                </ul>
+                <div class="d-none d-md-block dropdown" id="nav-avatar">
+                    <a class="d-block nav-link nav-profile dropdown-toggle p-0" style="height: 34px;" href="#" id="profileButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if user.is_authenticated %}
+                        <span class="d-inline-block align-middle py-2 ml-1">{{ user.name }}</span>
+                        <div class="nav-profile-img" style="background-image: url('{% static user.avatar %}'); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                        {% else %}
+                        <span class="d-inline-block align-middle py-2 ml-1">Вход</span>
+                        <div class="nav-profile-img" style="background-image: url('{% static user.avatar %}'); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                        {% endif %}
+                    </a>
+                    {% if user.is_authenticated %}
+                    <div class="dropdown-menu profile-dropdown" aria-labelledby="profileButton">
+                        <h6 class="dropdown-header" style="font-size: 1.1em; font-weight: lighter;">{{ user.email }}</h6>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'joseph_app:user_cab' user.pk %}" class="dropdown-item">Профиль</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'joseph_app:logout_user' %}" class="dropdown-item">Выйти</a>
+                    </div>
+                    {% else %}
+                    <div class="dropdown-menu profile-dropdown" aria-labelledby="profileButton">
+                        <form class="p-2" style="font-size: 0.8rem;" action="{% url 'joseph_app:login_user' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input class="form-control form-control-sm" type="email" name="email" required="required" id="email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Пароль</label>
+                                <input class="form-control form-control-sm" type="password" name="password" required="required" id="password" />
+                            </div>
+                            <button class="btn btn-secondary btn-sm" type="submit">Войти</button>
+                        </form>
+                        <div class="dropdown-divide"></div>
+                        <a class="dropdown-item" href="{% url 'joseph_app:create_user' %}">Зарегистрироваться</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        
+        <div class="row justify-content-center no-gutters position-relative" style="margin-top: 100px; z-index: 10;">
+            <div class="col-10" style="background-color: rgba(100, 100, 100, 0.0);">
+                <div class="frame">
+                    <div class="frame-border"></div>
+                    <div style="position: absolute; top: 0; left: 0; width: inherit; z-index: -1;">
+                        <div class="header" style="background-image: url({% static 'joseph_app/templatedata/images/header-background.png' %});"></div>
+                    </div>
+                    <h1 class="header-text">{% block header %}{% endblock %}</h1>
+                    <div class="header-divide"></div>
+                    
+                    {% block content %}
+                    
+                    <div class="page-content">
+                        
+                        <div class="stairs-">
+                        </div>
+                        
+                    </div>
+                    
+                    {% endblock %}
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="background-parallax">
+            <div id="parallax1">
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig1.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig2.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig3.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig4.png' %});"></div>
+            </div>
+            <div id="parallax2">
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig11.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig12.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig13.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig14.png' %});"></div>
+            </div>
+            <div id="parallax3">
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig21.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig22.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig23.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig24.png' %});"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="row w-100">
+                <div class="col-12">
+                    <h4 class="footer-h4">ГБУ г. Москвы «Городской центр профессионального и карьерного развития»</h4>
+                </div>
+            </div>
+            <div class="row no-gutters w-100 footer-h5">
+                <div class="col-3">
+                    <h5>Фактический адрес</h5>
+                    <span>Москва, ул. Таганская, д. 40-42</span>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-3">
+                    <h5>Электронная почта</h5>
+                    <span>pr-centrprof@ter.mos.ru</span>
+                </div>
+            </div>
+            <div class="row no-gutter w-100 footer-h5" style="margin-top: 0.5em;">
+                <div class="col-8">
+                    <h5>Единый телефон</h5>
+                    <span>(495) 912-32-41, (495) 912-30-51, (495) 912-44-79, (495) 912-38-81</span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="{% static 'joseph_app/templatedata/js/joseph.js' %}"></script>
+        {% block js %}{% endblock %}
+    </body>
+</html>

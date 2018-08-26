@@ -1,0 +1,14 @@
+.docs-back {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    z-index: 108;
+}
+.frame-part {
+    position: absolute;
+    top: -0.25rem;
+    height: calc(100% + 0.5rem);
+    z-index: 110;
+    background: rgb(33, 21, 81);
+    left: -0.5rem;
+}

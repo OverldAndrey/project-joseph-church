@@ -1,0 +1,250 @@
+@font-face{
+    font-family: 'HelveticaNeueCyr';
+    src: url('HelveticaNeueCyr-Bold.ttf') format('truetype');
+    font-weight: bold;
+	font-style: normal;
+}
+@font-face{
+    font-family: 'MyriadPro';
+    src: url('MyriadPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+	font-style: normal;
+}
+
+BODY{
+    cursor: default;
+    font-family: 'MyriadPro', 'Open sans', sans-serif;
+    overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'HelveticaNeueCyr', 'Open Sans', sans-serif;
+}
+
+.background {
+    position: fixed;
+    z-index: 0;
+}
+.index-top {
+    width: 100%;
+    background-color: rgb(33, 21, 81);
+    color: white;
+    z-index: 10;
+}
+.index-news {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(33, 21, 81);
+}
+.index-events {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(33, 21, 81);
+}
+.index-footer {
+    width: 100%;
+    background-color: rgb(33, 21, 81);
+    color: white;
+    z-index: 10;
+}
+.frame {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 110;
+    border-color: rgb(33, 21, 81);
+    border-style: solid;
+    border-width: 0.2em;
+}
+.art-img {
+    height: inherit;
+}
+.car-content {
+    background-color: rgb(33, 21, 81);
+    color: white;
+}
+.event-data-divide {
+    height: 20px;
+    width: auto;
+    background: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.index-news-stairs {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%
+}
+.index-events-stairs {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%
+}
+
+#index-arrows {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 1em;
+}
+#iarrow1, #iarrow2, #iarrow3, #iarrow4, #iarrow5 {
+    height: 20%;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    opacity: 0;
+}
+#in-stair1, #in-stair9 {
+    background: rgb(251, 200, 83);
+}
+#in-stair2, #in-stair3, #in-stair4, #in-stair5, #in-stair7, #in-stair8 {
+    background: rgb(82, 245, 255);
+}
+#in-stair6, #in-stair10 {
+    background: rgb(218, 71, 125);
+}
+#in-stair1 {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 30%;
+    height: 50px;
+}
+#in-stair5 {
+    position: absolute;
+    left: 55%;
+    top: calc(-1rem + 60px);
+    width: 5%;
+    height: 5rem;
+}
+#in-stair2 {
+    position: absolute;
+    left: 55%;
+    top: -1rem;
+    width: 15%;
+    height: 60px;
+}
+#in-stair3 {
+    position: absolute;
+    left: 70%;
+    top: -7rem;
+    width: 5%;
+    height: calc(6rem + 60px);
+}
+#in-stair4 {
+    position: absolute;
+    left: 70%;
+    top: calc(-7rem - 60px);
+    width: 20%;
+    height: 60px;
+}
+#in-stair6 {
+    position: absolute;
+    left: 80%;
+    top: -8rem;
+    width: 20%;
+    height: 35px;
+}
+#in-stair7 {
+    position: absolute;
+    left: 0;
+    bottom: -5rem;
+    width: 22%;
+    height: 60px;
+}
+#in-stair8 {
+    position: absolute;
+    left: 22%;
+    bottom: -5rem;
+    width: 5%;
+    height: 8rem;
+}
+#in-stair9 {
+    position: absolute;
+    left: 75%;
+    bottom: -1rem;
+    width: 25%;
+    height: 50px;
+}
+#in-stair10 {
+    position: absolute;
+    left: 0;
+    bottom: -6rem;
+    width: 15%;
+    height: 2rem;
+}
+#ie-stair2, #ie-stair3, #ie-stair6 {
+    background: rgb(251, 200, 83);
+}
+#ie-stair1, #ie-stair8, #ie-stair9 {
+    background: rgb(82, 245, 255);
+}
+#ie-stair4, #ie-stair5, #ie-stair7 {
+    background: rgb(218, 71, 125);
+}
+#ie-stair1 {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 30%;
+    height: 50px;
+}
+#ie-stair2 {
+    position: absolute;
+    left: 80%;
+    top: -9rem;
+    width: 6%;
+    height: 14rem;
+}
+#ie-stair3 {
+    position: absolute;
+    left: 80%;
+    top: -14rem;
+    width: 20%;
+    height: 5rem;
+}
+#ie-stair4 {
+    position: absolute;
+    left: 78.5%;
+    top: -10rem;
+    width: 2.5%;
+    height: 14rem;
+}
+#ie-stair5 {
+    position: absolute;
+    left: 77%;
+    top: -14.5rem;
+    width: 17%;
+    height: 1.5rem;
+}
+#ie-stair6 {
+    position: absolute;
+    left: 0;
+    bottom: -3rem;
+    width: 30%;
+    height: 5rem;
+}
+#ie-stair7 {
+    position: absolute;
+    left: 0;
+    bottom: -4.5rem;
+    width: 19%;
+    height: 2.1rem;
+}
+#ie-stair8 {
+    position: absolute;
+    left: 75%;
+    bottom: -4rem;
+    width: 5%;
+    height: 6rem;
+}
+#ie-stair9 {
+    position: absolute;
+    left: 80%;
+    bottom: -4rem;
+    width: 20%;
+    height: 4rem;
+}
