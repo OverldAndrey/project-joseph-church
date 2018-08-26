@@ -77,7 +77,10 @@
                                     <div class="form-group row no-gutters">
                                         <div class="d-none d-md-block col-6"></div>
                                         <div class="col-12 col-md-6">
-                                            <button class="btn btn-danger w-100" style="background: rgb(218, 71, 125); color: rgb(33, 21, 81);" type="button" data-toggle="collapse" data-target="#collapsePersData" aria-expanded="false" aria-controls="collapsePersData"> Раскрыть </button>
+                                            <button class="btn btn-danger w-100" style="background: rgb(218, 71, 125); color: rgb(33, 21, 81);" type="button" data-toggle="collapse" data-target="#collapsePersData" aria-expanded="false" aria-controls="collapsePersData"> 
+                                                <span id="pers-open">Раскрыть</span>
+                                                <span id="pers-close" class="d-none">Скрыть</span>
+                                            </button>
                                         </div> 
                                     </div>
                                     
@@ -181,7 +184,7 @@
                             <div class="d-none d-xl-block col-xl-3" id="persData"></div>
                             <div class="d-none d-md-block col-md-4">
                                 <div class="p-4 mr-2 position-relative" id="avatarData">
-                                    <div class="cab-avatar" style="background-image: url({% static user.avatar %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                    <div class="cab-avatar" style="background-position: center; background-image: url('{% static user.avatar %}'); background-size: cover; background-repeat: no-repeat;"></div>
                                 </div>
                             </div>
                         </div>
@@ -411,11 +414,15 @@
                         <h4 class="ml-2 ml-lg-3 mt-4 mb-4" id="h4-stat-header">Статистика</h4>
                         
                         <div class="row no-gutters">
-                            <div class="col">
-                                
+                            <div class="col-6 p-2">
+                                <div style="background: rgb(251, 200, 83); width: 100%;" class="p-2">
+                                    <img src="{% static statistics %}" class="img-fluid">
+                                </div>
                             </div>
-                            <div class="col">
-                                
+                            <div class="col-6 p-2">
+                                <div style="background: rgb(251, 200, 83); width: 100%;" class="p-2">
+                                    <img src="{% static statistics %}" class="img-fluid">
+                                </div>
                             </div>
                         </div>
                         
@@ -434,9 +441,11 @@
                             <div id="stair-cab7"></div>
                             <div id="stair-cab8"></div>
                             
+                            {% if user.is_admin %}
                             <div id="stair-cab9"></div>
                             <div id="stair-cab10"></div>
                             <div id="stair-cab11"></div>
+                            {% endif %}
                         </div>
                         
                     </div>

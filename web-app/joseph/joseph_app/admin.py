@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User, Poll, Poll_choice, User_poll_choice, Article, Article_Image, Event, Event_register
+from .models import User, Poll, Poll_choice, User_poll_choice, Article, Article_Image, Event, Event_register, Document
 
 class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
@@ -77,6 +77,8 @@ admin.site.register(Article_Image)
 
 admin.site.register(Event)
 admin.site.register(Event_register)
+
+admin.site.register(Document)
 
 admin.site.unregister(Group)
 

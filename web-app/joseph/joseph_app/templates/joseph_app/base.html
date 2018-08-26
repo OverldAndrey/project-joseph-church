@@ -119,10 +119,10 @@
                     <a class="d-block nav-link nav-profile dropdown-toggle p-0" style="height: 34px;" href="#" id="profileButton" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {% if user.is_authenticated %}
                         <span class="d-inline-block align-middle py-2 ml-1">{{ user.name }}</span>
-                        <div class="nav-profile-img" style="background-image: url({% static user.avatar %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                        <div class="nav-profile-img" style="background-image: url('{% static user.avatar %}'); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                         {% else %}
                         <span class="d-inline-block align-middle py-2 ml-1">Вход</span>
-                        <div class="nav-profile-img" style="background-image: url({% static user.avatar %}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                        <div class="nav-profile-img" style="background-image: url('{% static user.avatar %}'); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                         {% endif %}
                     </a>
                     {% if user.is_authenticated %}
@@ -182,22 +182,22 @@
         
         <div class="background-parallax">
             <div id="parallax1">
-                <div class="parallax-piece1" style="background: red;"></div>
-                <div class="parallax-piece1" style="background: red;"></div>
-                <div class="parallax-piece1" style="background: red;"></div>
-                <div class="parallax-piece1" style="background: red;"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig1.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig2.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig3.png' %});"></div>
+                <div class="parallax-piece1" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig4.png' %});"></div>
             </div>
             <div id="parallax2">
-                <div class="parallax-piece2" style="background: blue;"></div>
-                <div class="parallax-piece2" style="background: blue;"></div>
-                <div class="parallax-piece2" style="background: blue;"></div>
-                <div class="parallax-piece2" style="background: blue;"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig11.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig12.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig13.png' %});"></div>
+                <div class="parallax-piece2" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig14.png' %});"></div>
             </div>
             <div id="parallax3">
-                <div class="parallax-piece3" style="background: green;"></div>
-                <div class="parallax-piece3" style="background: green;"></div>
-                <div class="parallax-piece3" style="background: green;"></div>
-                <div class="parallax-piece3" style="background: green;"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig21.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig22.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig23.png' %});"></div>
+                <div class="parallax-piece3" style="background-image: url({% static 'joseph_app/templatedata/images/parallax/fig24.png' %});"></div>
             </div>
         </div>
         

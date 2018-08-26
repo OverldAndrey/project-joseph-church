@@ -10,11 +10,9 @@ from .models import User, Poll_choice, Poll, User_poll_choice, Event, Event_regi
 
 import datetime
 import os
-import shutil
 import requests
 import pyqrcode
 import json
-import pytz
 from docx import Document as docxdoc
 from docx.shared import Inches
 import openpyxl
@@ -26,13 +24,14 @@ import matplotlib.dates as mdates
 import csv
 
 
-# TZ = pytz.timezone('Europe/Moscow')
 STATIC_PATH = os.getcwd()+"/joseph_app/static"
 FILE_PATH = "/joseph_app/"
 
+# Редирект на главную с url, состоящего только из домена/ip
 def joseph_index(request):
     return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
+# Рендер главной страницы index.html
 def index(request):
     article_list = []
     for article in Article.objects.order_by("-date")[:3]:
@@ -104,7 +103,7 @@ def register_user(request):
     user.organizations = request.POST['organizations']
     user.hobby = request.POST['hobby']
     user.save()
-    return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
+    return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
 
 #Изменение информации о пользователе, рендер update_user.html ???
 def redact_user(request, user_pk):
@@ -129,7 +128,7 @@ def update_user(request, user_pk):
                 os.mkdir(path[:-8])
                 os.mkdir(path[:-1])
             else:
-                os.remove(user.avatar)
+                os.remove(STATIC_PATH+user.avatar)
             with open(path + f.name, "wb+") as destination:
                 for chunk in f.chunks():
                     destination.write(chunk)
@@ -138,8 +137,9 @@ def update_user(request, user_pk):
         user.date_of_birth = dob[6:]+"-"+dob[3:5]+"-"+dob[:2]
         user.phone = request.POST['phone']
         user.pubnet = request.POST['pubnet']
-        user.university = request.POST['university']
-        user.course = request.POST['course']
+        if not user.is_admin:
+            user.university = request.POST['university']
+            user.course = request.POST['course']
         user.reg_address = request.POST['reg_address']
         user.cur_address = request.POST['cur_address']
         user.organizations = request.POST['organizations']
@@ -147,6 +147,7 @@ def update_user(request, user_pk):
         user.save()
         return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
 
+# Изменение пароля пользователя, редирект на главную
 def password_change(request, user_pk):
     pwd = request.POST['password_old']
     email = request.user.email
@@ -158,8 +159,9 @@ def password_change(request, user_pk):
             logout(request)
             user.set_password(pwd1)
             user.save()
-        return HttpResponsePermanentRedirect(reverse("joseph_app:login"))
+        return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
+# Построение графика годовой статистики посещаемости (WIP)
 def statistics_yearly(data_values1, data_values2):
     # data_values1 = [x for x in np.random.randint(1,101,12)]
     # data_values2 = [x for x in np.random.randint(1,101,12)]
@@ -168,30 +170,37 @@ def statistics_yearly(data_values1, data_values2):
 
 
     dpi = 100
-    fig = plt.figure(dpi = dpi, figsize = (1280 / dpi, 720 / dpi) )
-    mpl.rcParams.update({'font.size': 10})
+    try:
+        fig = plt.figure(dpi = dpi, figsize = (int(1280 / dpi), int(720 / dpi)) )
+        mpl.rcParams.update({'font.size': 10})
 
-    plt.title('Посещение мероприятий')
+        plt.title('Посещение мероприятий')
 
-    ax = plt.axes()
-    ax.yaxis.grid(True, zorder = 1)
+        ax = plt.axes()
+        ax.yaxis.grid(True, zorder = 1)
 
-    # xs = range(len(data_names))
-    plt.bar([x + 0.05 for x in x_months], data_values1,
-            width = 0.2, color = '#DA477D', alpha = 0.9, label = (datetime.datetime.now()-datetime.timedelta(365)).strftime("%Y"),
-            zorder = 2)
-    if data_values2 != 0:
-        plt.bar([x + 0.3 for x in x_months], data_values2,
-            width = 0.2, color = '#52F5FF', alpha = 0.9, label = datetime.datetime.today.strftime("%Y"),
-            zorder = 2)
+        # xs = range(len(data_names))
+        plt.bar([x + 0.05 for x in x_months], data_values1,
+                width = 0.2, color = '#DA477D', alpha = 0.9, label = (datetime.datetime.now()-datetime.timedelta(365)).strftime("%Y"),
+                zorder = 2)
+        if data_values2 != 0:
+            plt.bar([x + 0.3 for x in x_months], data_values2,
+                width = 0.2, color = '#52F5FF', alpha = 0.9, label = datetime.datetime.today().strftime("%Y"),
+                zorder = 2)
 
-    plt.xticks(x_months, months)
+        plt.xticks(x_months, months)
 
-    fig.autofmt_xdate(rotation = 25)
+        fig.autofmt_xdate(rotation = 25)
 
-    plt.legend(loc='upper right')
-    fig.savefig(STATIC_PATH + FILE_PATH + 'static/statistics/bars-{}.png'.format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")))
+        plt.legend(loc='upper right')
+        path = FILE_PATH + 'statistics/bars-{}.png'.format(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+        fig.savefig(fname=STATIC_PATH+path)
 
+        return path
+    except:
+        return None
+
+# Построение графика месячной статистики посещаемости (WIP)
 # def stastics_monhthly(data_values1, data_values2):
 #         # data_values1 = [x for x in np.random.randint(1,101,12)]
 #         # data_values2 = [x for x in np.random.randint(1,101,12)]
@@ -230,6 +239,7 @@ def user_cab(request, user_pk):
     if user is not None and user.is_authenticated and user.pk == user_pk:
 
         event_list = []
+        statistics = None
         if user.is_admin:
             for event in Event.objects.all():
                 to_send = {
@@ -243,10 +253,28 @@ def user_cab(request, user_pk):
                     "register" : event,
                 }
                 event_list.append(to_send)
+            data_values1 = []
+            data_values2 = []
+            for i in range (9, 21, 1):
+                events = Event.objects.filter(event_date__lte=datetime.date(2018, i if i < 13 else i-12, 28), event_date__gte=datetime.date(2018, i if i < 13 else i-12, 1))
+                reg_n = 0
+                for e in events:
+                    if user.event_register_set.filter(event_pk=e.pk):
+                        reg_n += 1
+                data_values1.append(reg_n)
+            for i in range (9, 21, 1):
+                events = Event.objects.filter(event_date__lte=datetime.date(2017, i if i < 13 else i-12, 28), event_date__gte=datetime.date(2018, i if i < 13 else i-12, 1))
+                reg_n = 0
+                for e in events:
+                    if user.event_register_set.filter(event_pk=e.pk):
+                        reg_n += 1
+                data_values2.append(reg_n)
+            statistics = statistics_yearly(data_values1, data_values2)
 
         response = {
             "user" : user,
             "event_list" : event_list,
+            "statistics" : statistics
         }
         # statistics_yearly()
 
@@ -254,6 +282,7 @@ def user_cab(request, user_pk):
     else:
         return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
+# Рендер страницы опросов polls.html
 @login_required(login_url="/joseph")
 def polls(request):
     user = request.user
@@ -267,6 +296,7 @@ def polls(request):
     }
     return render(request, "joseph_app/polls.html", response)
 
+# Создание опроса
 @login_required(login_url="/joseph")
 def poll_create(request, choice_number):
     new_poll = Poll(text=request.POST['text'], pub_date=datetime.datetime.now(), poll_type=request.POST['poll_type'])
@@ -307,7 +337,8 @@ def poll_create(request, choice_number):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
-@login_required(login_url="/joseph")
+# Регистация ответа на опрос
+@csrf_exempt
 def poll_choice_reg(request, poll_pk):
     user = request.user
     poll = Poll.objects.get(pk=poll_pk)
@@ -328,6 +359,7 @@ def poll_choice_reg(request, poll_pk):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:polls"))
 
+# Рендер страницы мероприятий events.html
 @login_required(login_url="/joseph")
 def events(request):
     user = request.user
@@ -379,45 +411,49 @@ def events(request):
     }
     return render(request, "joseph_app/events.html", response)
 
+# Создание мероприятия
 @login_required(login_url="/joseph")
 def event_create(request):
     user = request.user
+    if user is not None and user.is_authenticated:
+        new_event = Event(title=request.POST['event_title'], text=request.POST['event_text'], pub_date=datetime.datetime.now(),
+                          event_date=request.POST['event_date'], place=request.POST['place'])
+        new_event.save()
+        if request.FILES:
+            f = request.FILES['event_image']
+            path = STATIC_PATH + FILE_PATH + "event_img/{}/".format(new_event.pk)
+            if not os.path.exists(path):
+                os.mkdir(path[:-1])
+            with open(path+f.name, "wb+") as destination:
+                for chunk in f.chunks():
+                    destination.write(chunk)
+            new_event.image = path[len(STATIC_PATH):]+f.name
+        new_event.save()
 
-    new_event = Event(title=request.POST['event_title'], text=request.POST['event_text'], pub_date=datetime.datetime.now(),
-                      event_date=request.POST['event_date'], place=request.POST['place'])
-    new_event.save()
-    if request.FILES:
-        f = request.FILES['event_image']
-        path = STATIC_PATH + FILE_PATH + "event_img/{}/".format(new_event.pk)
-        if not os.path.exists(path):
-            os.mkdir(path[:-1])
-        with open(path+f.name, "wb+") as destination:
-            for chunk in f.chunks():
-                destination.write(chunk)
-        new_event.image = path[len(STATIC_PATH):]+f.name
-    new_event.save()
+        payload = {
 
-    payload = {
+             'platform': 'vk',
+             'users': 'everyone',
+             'data': {
+                      'title': Event.objects.get(pk=new_event.pk).title,
+                      'text' : Event.objects.get(pk=new_event.pk).text,
+                      # 'pub_date' : Event.objects.get(pk=new_event.pk).pub_date,
+                      'event_date' : Event.objects.get(pk=new_event.pk).event_date.strftime("%Y-%m-%d %H:%M:%S"),
+                      'place' : Event.objects.get(pk=new_event.pk).place,
+                      # 'image': open(STATIC_PATH+Event.objects.get(pk=new_event.pk).image, "rb+"),
+                     }
+                  }
+        headers = {'content-type': 'application/json'}
 
-         'platform': 'vk',
-         'users': 'everyone',
-         'data': {
-                  'title': Event.objects.get(pk=new_event.pk).title,
-                  'text' : Event.objects.get(pk=new_event.pk).text,
-                  # 'pub_date' : Event.objects.get(pk=new_event.pk).pub_date,
-                  'event_date' : Event.objects.get(pk=new_event.pk).event_date.strftime("%Y-%m-%d %H:%M:%S"),
-                  'place' : Event.objects.get(pk=new_event.pk).place,
-                  # 'image': open(STATIC_PATH+Event.objects.get(pk=new_event.pk).image, "rb+"),
-                 }
-              }
-    headers = {'content-type': 'application/json'}
+        link = 'https://app.botmother.com/api/bot/action/ByqHjGiSX/BFCTDA0D8CsB1WDFWr7CsD5BlBkDXjLBoCImCwrCyBGBp_BLDCDIBODoBHCoClB3'
 
-    link = 'https://app.botmother.com/api/bot/action/ByqHjGiSX/BFCTDA0D8CsB1WDFWr7CsD5BlBkDXjLBoCImCwrCyBGBp_BLDCDIBODoBHCoClB3'
+        r = requests.post(link, data = json.dumps(payload), headers = headers)
 
-    r = requests.post(link, data = json.dumps(payload), headers = headers)
+        return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
+    else:
+        return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
 
-    return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
-
+# Регистрация на мероприятие
 @login_required(login_url="/joseph")
 def event_register(request, event_pk):
     user = request.user
@@ -432,6 +468,7 @@ def event_register(request, event_pk):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:events"))
 
+# Проставление отметки о посещении
 @csrf_exempt
 def event_visited(request, reg_pk):
     reg = Event_register.objects.get(pk=reg_pk)
@@ -440,25 +477,46 @@ def event_visited(request, reg_pk):
 
     return HttpResponse(reg.user.name + ' was registrated')
 
+# Создание новости
 @login_required(login_url="/joseph")
 def article_create(request):
     user = request.user
-    new_article = Article(title=request.POST['title'], body=request.POST['body'], date=datetime.datetime.now())
-    new_article.save()
-    if request.FILES:
-        for key in request.FILES.keys():
-            f = request.FILES[key]
-            path = STATIC_PATH+FILE_PATH+"article_gal/{}/".format(new_article.pk)
-            if not os.path.exists(path):
-                os.mkdir(path[:-1])
-            with open(path+f.name, "wb+") as destination:
-                for chunk in f.chunks():
-                    destination.write(chunk)
-            new_gal_img = Article_Image(article=new_article, image=path[len(STATIC_PATH):]+f.name)
-            new_gal_img.save()
+    if user is not None and user.is_authenticated:
+        new_article = Article(title=request.POST['title'], body=request.POST['body'], date=datetime.datetime.now())
+        new_article.save()
+        if request.FILES:
+            for key in request.FILES.keys():
+                f = request.FILES[key]
+                path = STATIC_PATH+FILE_PATH+"article_gal/{}/".format(new_article.pk)
+                if not os.path.exists(path):
+                    os.mkdir(path[:-1])
+                with open(path+f.name, "wb+") as destination:
+                    for chunk in f.chunks():
+                        destination.write(chunk)
+                new_gal_img = Article_Image(article=new_article, image=path[len(STATIC_PATH):]+f.name)
+                new_gal_img.save()
 
-    return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab"), args=(user.pk,))
+        payload = {
 
+            'platform': 'vk',
+            'users': 'everyone',
+            'data': {
+                'title': Article.objects.get(pk=new_article.pk).title,
+                'body': Article.objects.get(pk=new_article.pk).body,
+                'image': 'http://142.93.105.202:8000/static{}'.format(new_article.article_image_set.all()[0].image)
+            }
+        }
+        headers = {'content-type': 'application/json'}
+
+        link = 'https://app.botmother.com/api/bot/action/B1KnTxmUm/BwKC_BeagBuD6B3DPcDmB0tCqDqBf-CKCdWGbzCxCIDk7C6DjCjB-DGB7DyLdCbB'
+
+        r = requests.post(link, data=json.dumps(payload), headers=headers)
+
+        return HttpResponsePermanentRedirect(reverse("joseph_app:user_cab", args=(user.pk,)))
+    else:
+        return HttpResponsePermanentRedirect(reverse("joseph_app:index"))
+
+# Формирование списка зарегистрированных на мероприятие в формате docx
 def make_docx(request, event_pk):
     document = docxdoc()
     document.add_heading(Event.objects.get(pk=event_pk).title, 0)
@@ -496,6 +554,7 @@ def make_docx(request, event_pk):
     os.remove("./temp")
     return response
 
+# Формирование списка зарегистрированных на мероприятие в формате xlsx
 def make_xlsx(request, event_pk):
     wb = openpyxl.Workbook()
     wb.active.title = Event.objects.get(pk=event_pk).title
@@ -534,6 +593,7 @@ def make_xlsx(request, event_pk):
     os.remove("./temp")
     return response
 
+# отправка списка мероприятий (для моб. приложения)
 def retrieve_event_list(request):
     event_list = []
     for event in Event.objects.all():
@@ -544,9 +604,9 @@ def retrieve_event_list(request):
     response = {
         "event_list" : event_list,
     }
-    #return render(request, "temp.html", response) #(DBG)
     return JsonResponse(response)
 
+# Отправка списка зарегистрированных (для моб. приложения)
 def retrieve_reg_list(request, event_pk):
     reg_obj_list = Event_register.objects.filter(event_pk=event_pk)
     reg_list = []
@@ -559,9 +619,9 @@ def retrieve_reg_list(request, event_pk):
     response = {
         "reg_list" : reg_list,
     }
-    #return render(request, "temp.html", response) #(DBG)
     return JsonResponse(response)
 
+# Рендер страницы с документами docs.html
 @login_required(login_url="/joseph")
 def file_upload_page(request):
     response = {
@@ -569,6 +629,7 @@ def file_upload_page(request):
     }
     return  render(request, 'joseph_app/docs.html', response)
 
+# Загрузка документа на сервер
 @login_required(login_url="/joseph")
 def file_upload(request):
     doc = Document(title = request.POST['title'], pub_date = datetime.datetime.now())
@@ -586,6 +647,7 @@ def file_upload(request):
 
     return HttpResponsePermanentRedirect(reverse("joseph_app:file_upload_page"))
 
+# Загрузка документа с сервера
 @login_required(login_url="/joseph")
 def file_download(request,doc_pk):
     import mimetypes

@@ -80,6 +80,9 @@ a:hover {
     color: white;
     z-index: 150;
 }
+.fixed {
+    position: fixed;
+}
 .footer-h4 {
     font-size: 0.6em;
 }
@@ -145,7 +148,7 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.5;
+    opacity: 1;
 }
 
 

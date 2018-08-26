@@ -12,11 +12,11 @@ $("#parallax1").css("top", $(".footer").offset().top*0.05+"px")
 $("#parallax2").css("top", $(".footer").offset().top*0.25+"px")
 $("#parallax3").css("top", $(".footer").offset().top*0.4+"px")
 
-$(".parallax-piece1").css("height", "200px")
+$(".parallax-piece1").css("height", "350px")
 $(".parallax-piece1").css("width", parseFloat($(".parallax-piece1").css("height"))*16/9+"px")
-$(".parallax-piece2").css("height", "200px")
+$(".parallax-piece2").css("height", "350px")
 $(".parallax-piece2").css("width", parseFloat($(".parallax-piece2").css("height"))*16/9+"px")
-$(".parallax-piece3").css("height", "200px")
+$(".parallax-piece3").css("height", "350px")
 $(".parallax-piece3").css("width", parseFloat($(".parallax-piece3").css("height"))*16/9+"px")
 var pieces1 = []
 var pieces2 = []
@@ -81,6 +81,8 @@ var TimerId = function() {//setInterval(function() {
     $("#parallax1").css("top", $(".footer").offset().top*0.05+"px")
     $("#parallax2").css("top", $(".footer").offset().top*0.25+"px")
     $("#parallax3").css("top", $(".footer").offset().top*0.4+"px")
+    if ($(window).height() > ($('.background-parallax').height()+ $('.footer').height()+60))
+		{$('.footer').addClass('fixed')} else {$('.footer').removeClass('fixed')};
 }//, 100)
 
 TimerId()

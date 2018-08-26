@@ -9,7 +9,6 @@ app_name="joseph_app"
 urlpatterns = [
     path('', views.index, name="index"),
 
-    # path('accounts/login/', auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
     path('logout/', views.logout_user, name="logout_user"),
     path('registration/', views.create_user, name="create_user"),
     path('reg_new_user/', views.register_user, name="register_user"),
@@ -24,7 +23,6 @@ urlpatterns = [
     path('polls/create/create_<int:choice_number>_poll', views.poll_create, name="poll_create"),
 
     path('news/', ListView.as_view(queryset=Article.objects.all().order_by('-date')[:20], template_name='joseph_app/news.html'), name="news"),
-    path('news/<int:pk>', DetailView.as_view(model = Article, template_name = 'joseph_app/article.html'), name="news_article"),
     path('news/create/create_article', views.article_create, name="article_create"),
 
     path('events/', views.events, name="events"),
